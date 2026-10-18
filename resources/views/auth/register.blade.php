@@ -34,15 +34,15 @@
             <div>
                 <label for="name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nama Lengkap</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                       class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-600 focus:outline-none focus:border-blue-500 text-sm"
-                       placeholder="Budi Prakoso">
+                       class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 text-sm"
+                       placeholder="Nama Lengkap">
             </div>
 
             <div>
                 <label for="username" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Username</label>
                 <input type="text" id="username" name="username" value="{{ old('username') }}" required
-                       class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-600 focus:outline-none focus:border-blue-500 text-sm"
-                       placeholder="budifit">
+                       class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 text-sm"
+                       placeholder="username">
             </div>
         </div>
 

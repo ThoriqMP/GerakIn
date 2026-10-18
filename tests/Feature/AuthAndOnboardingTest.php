@@ -22,7 +22,7 @@ class AuthAndOnboardingTest extends TestCase
         $response = $this->get('/login');
         $response->assertStatus(200);
         $response->assertSee('Gerak');
-        $response->assertSee('Mode Pengujian Cepat');
+        $response->assertSee('Masuk ke GerakIn');
     }
 
     public function test_user_can_register_and_is_redirected_to_onboarding(): void
