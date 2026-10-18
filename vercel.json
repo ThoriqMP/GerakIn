@@ -24,6 +24,8 @@
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
+    "APP_URL": "https://gerak-in-seven.vercel.app",
+    "ASSET_URL": "/",
     "APP_KEY": "base64:r8XnMrp13Ha0P4fQzAELzZozMGWEN+hH3mmFK44xvq0=",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",

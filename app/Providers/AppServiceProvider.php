@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Force HTTPS in production / Vercel to prevent Mixed Content
+        if (app()->environment('production') || env('VERCEL') || request()->header('x-forwarded-proto') === 'https') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         // Auto-run migrations & seeds on Vercel / serverless if database is fresh
         if (app()->environment('production') || env('VERCEL')) {
             try {
