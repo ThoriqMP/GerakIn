@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white" x-data="{ mobileMenu: false }">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white" x-data="{ mobileMenu: false, pwaModalOpen: false }" x-init="window.addEventListener('pwa-installable', () => {})">
 
     <!-- 1. TOP NAVBAR -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all">
@@ -49,6 +49,15 @@
 
             <!-- Auth CTAs (Single-Line, Non-wrapping Buttons) -->
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <!-- PWA Install Button -->
+                <button type="button"
+                        @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
+                        class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold transition-colors border border-blue-200 whitespace-nowrap"
+                        title="Pasang Aplikasi GerakIn">
+                    <svg class="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Pasang App</span>
+                </button>
+
                 @auth
                     <a href="{{ route('dashboard') }}" class="whitespace-nowrap px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-1.5">
                         <span>Buka Dashboard</span>
@@ -78,6 +87,15 @@
 
         <!-- Mobile Dropdown Nav -->
         <div x-show="mobileMenu" x-cloak @click.away="mobileMenu = false" class="lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-4 space-y-2.5 shadow-lg">
+            <!-- Mobile PWA Install Button -->
+            <button type="button" @click="mobileMenu = false; (window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true))" class="w-full flex items-center justify-between text-xs font-bold text-blue-700 bg-blue-50 px-3.5 py-2.5 rounded-xl border border-blue-200">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Pasang Aplikasi (PWA)</span>
+                </div>
+                <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-md font-extrabold uppercase">Install</span>
+            </button>
+
             <a href="#fitur-utama" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-1.5 hover:text-blue-600">Fitur Unggulan</a>
             <a href="#strava-running" @click="mobileMenu = false" class="flex items-center justify-between text-sm font-semibold text-blue-600 py-1.5">
                 <span>Lari GPS (Strava Mode)</span>
@@ -121,7 +139,7 @@
                 GerakIn menggabungkan kemudahan pencatatan set & beban gym dengan pelacak lari real-time ala Strava. Dilengkapi muscle heatmap interaktif, timer istirahat otomatis, dan kemampuan offline penuh.
             </p>
 
-            <!-- Dual Action CTAs -->
+            <!-- Action CTAs with PWA Install -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <a href="{{ route('register') }}" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-display font-black text-sm sm:text-base shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center gap-2">
                     <span>Mulai Sekarang (Gratis)</span>
@@ -132,6 +150,13 @@
                     <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
                     <span>Coba Demo 1-Klik</span>
                 </a>
+
+                <button type="button"
+                        @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
+                        class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-blue-50/80 hover:bg-blue-100/80 text-blue-800 font-display font-bold text-sm sm:text-base border border-blue-200 shadow-xs active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Pasang di HP (PWA)</span>
+                </button>
             </div>
 
             <!-- Trust Badges -->
@@ -488,6 +513,28 @@
                     </p>
                 </div>
             </div>
+
+            <!-- Dedicated PWA Install Banner Card -->
+            <div class="mt-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="space-y-1.5 text-center sm:text-left">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-blue-100 text-[11px] font-bold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Instalasi Cepat • Progressive Web App</span>
+                    </div>
+                    <h3 class="font-display font-black text-xl sm:text-2xl text-white">
+                        Pasang GerakIn Langsung ke Layar Utama HP Anda
+                    </h3>
+                    <p class="text-xs sm:text-sm text-blue-100 max-w-xl">
+                        Tanpa perlu unduh ratusan MB dari toko aplikasi. GerakIn langsung terpasang di HP Anda, ringan, cepat, dan siap digunakan saat sinyal gym mati.
+                    </p>
+                </div>
+                <button type="button"
+                        @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
+                        class="shrink-0 px-6 py-3.5 rounded-2xl bg-white text-blue-700 hover:bg-blue-50 font-display font-black text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Pasang Aplikasi Sekarang</span>
+                </button>
+            </div>
         </div>
     </section>
 
@@ -692,6 +739,67 @@
             </div>
         </div>
     </footer>
+
+    <!-- PWA Installation Guide Modal -->
+    <div x-show="pwaModalOpen" x-cloak class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div @click.away="pwaModalOpen = false" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                    <img src="/icons/icon-72x72.png" alt="GerakIn" class="w-9 h-9 rounded-xl shadow-xs">
+                    <div>
+                        <h3 class="font-display font-black text-lg text-slate-900">Pasang GerakIn (PWA)</h3>
+                        <p class="text-xs text-slate-500">Aplikasi siap jalan langsung dari layar utama</p>
+                    </div>
+                </div>
+                <button type="button" @click="pwaModalOpen = false" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Device Instructions -->
+            <div class="space-y-3 text-xs text-slate-700">
+                <!-- iOS Instruction -->
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
+                        <span>🍏 iPhone / iPad (Safari)</span>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600 pl-0.5 leading-relaxed">
+                        <li>Buka situs ini di browser <strong>Safari</strong>.</li>
+                        <li>Ketuk ikon <strong>Bagikan (Share)</strong> di bilah bawah.</li>
+                        <li>Pilih <strong>"Tambahkan ke Layar Utama" (Add to Home Screen)</strong>.</li>
+                    </ol>
+                </div>
+
+                <!-- Android Instruction -->
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
+                        <span>🤖 Android (Google Chrome)</span>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600 pl-0.5 leading-relaxed">
+                        <li>Buka situs ini di browser <strong>Chrome</strong>.</li>
+                        <li>Ketuk ikon <strong>titik tiga (⋮)</strong> di pojok kanan atas.</li>
+                        <li>Pilih <strong>"Pasang aplikasi"</strong> atau <strong>"Tambahkan ke Layar Utama"</strong>.</li>
+                    </ol>
+                </div>
+
+                <!-- Desktop Instruction -->
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
+                        <span>💻 Laptop / Komputer (Chrome, Edge, Brave)</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        Klik ikon <strong>⊕</strong> di sisi kanan address bar browser, lalu klik <strong>"Instal"</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button type="button" @click="pwaModalOpen = false" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition-all">
+                    Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
