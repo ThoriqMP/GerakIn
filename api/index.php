@@ -27,6 +27,20 @@ foreach ($dirs as $dir) {
 $databaseUrl = getenv('DATABASE_URL') ?: (getenv('POSTGRES_URL') ?: getenv('DB_URL'));
 $dbConnection = getenv('DB_CONNECTION');
 
+// Check for unpopulated template placeholders like [YOUR-PASSWORD]
+if ($databaseUrl && (
+    str_contains($databaseUrl, '[YOUR-PASSWORD]') ||
+    str_contains($databaseUrl, '[YOUR_PASSWORD]') ||
+    str_contains($databaseUrl, '[PASSWORD]') ||
+    str_contains($databaseUrl, '%5BYOUR-PASSWORD%5D')
+)) {
+    error_log('GerakIn: DATABASE_URL still contains placeholder password [YOUR-PASSWORD]. Falling back to SQLite.');
+    $databaseUrl = null;
+    putenv('DATABASE_URL=');
+    $_ENV['DATABASE_URL'] = '';
+    $_SERVER['DATABASE_URL'] = '';
+}
+
 if ($databaseUrl && empty($dbConnection)) {
     if (str_starts_with($databaseUrl, 'postgres://') || str_starts_with($databaseUrl, 'postgresql://')) {
         $dbConnection = 'pgsql';

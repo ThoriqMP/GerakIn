@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Route;
 
 // Root redirect
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
+    try {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+    } catch (\Throwable $e) {
+        \Illuminate\Support\Facades\Log::error('Root redirect check: ' . $e->getMessage());
+        return redirect()->route('login');
     }
     return redirect()->route('login');
 });
