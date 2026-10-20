@@ -41,6 +41,23 @@ if ($databaseUrl && (
     $_SERVER['DATABASE_URL'] = '';
 }
 
+// If using Supabase Direct connection (which is IPv6 only and fails on Vercel),
+// auto-convert to Supabase IPv4 Pooler endpoint:
+if ($databaseUrl && preg_match('/db\.([a-z0-9]+)\.supabase\.co:5432/i', $databaseUrl, $m)) {
+    $ref = $m[1];
+    $databaseUrl = preg_replace(
+        '/^postgres(ql)?:\/\/([^:]+):([^@]+)@db\.' . $ref . '\.supabase\.co:5432\/([^?]+)(.*)$/',
+        'postgresql://postgres.' . $ref . ':$3@aws-0-ap-northeast-1.pooler.supabase.com:5432/$4$5',
+        $databaseUrl
+    );
+    if (!str_contains($databaseUrl, 'sslmode=')) {
+        $databaseUrl .= (str_contains($databaseUrl, '?') ? '&' : '?') . 'sslmode=require';
+    }
+    putenv("DATABASE_URL={$databaseUrl}");
+    $_ENV['DATABASE_URL'] = $databaseUrl;
+    $_SERVER['DATABASE_URL'] = $databaseUrl;
+}
+
 if ($databaseUrl && empty($dbConnection)) {
     if (str_starts_with($databaseUrl, 'postgres://') || str_starts_with($databaseUrl, 'postgresql://')) {
         $dbConnection = 'pgsql';
