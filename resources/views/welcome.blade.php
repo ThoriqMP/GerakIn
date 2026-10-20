@@ -423,8 +423,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <!-- Feature 1: Strava Running Tracker -->
-                <div id="strava-running" class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-300 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+                <div id="strava-running" class="p-6 rounded-3xl bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-300 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </div>
                     <h3 class="font-display font-black text-lg text-slate-900 mb-1.5">Pelacak Lari GPS ala Strava</h3>
@@ -434,8 +434,8 @@
                 </div>
 
                 <!-- Feature 2: Smart Gym Logger -->
-                <div id="gym-logger" class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-300 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+                <div id="gym-logger" class="p-6 rounded-3xl bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-300 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                     </div>
                     <h3 class="font-display font-black text-lg text-slate-900 mb-1.5">Smart Workout Logger</h3>
@@ -445,8 +445,8 @@
                 </div>
 
                 <!-- Feature 3: Auto Rest Timer -->
-                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-300 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+                <div class="p-6 rounded-3xl bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-300 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
                     <h3 class="font-display font-black text-lg text-slate-900 mb-1.5">Rest Timer Otomatis</h3>
@@ -456,8 +456,8 @@
                 </div>
 
                 <!-- Feature 4: Interactive Muscle Heatmap -->
-                <div id="muscle-heatmap" class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-300 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+                <div id="muscle-heatmap" class="p-6 rounded-3xl bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-300 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     </div>
                     <h3 class="font-display font-black text-lg text-slate-900 mb-1.5">Muscle Heatmap Anatomi</h3>
@@ -467,8 +467,8 @@
                 </div>
 
                 <!-- Feature 5: 100+ Exercise Library -->
-                <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-300 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+                <div class="p-6 rounded-3xl bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-300 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
                     <h3 class="font-display font-black text-lg text-slate-900 mb-1.5">100+ Database Gerakan & Kustom</h3>
@@ -478,8 +478,8 @@
                 </div>
 
                 <!-- Feature 6: Offline PWA & Zero Ads -->
-                <div id="pwa-offline" class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 hover:border-blue-300 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-rose-600 text-white flex items-center justify-center mb-4 shadow-sm group-hover:scale-105 transition-transform">
+                <div id="pwa-offline" class="p-6 rounded-3xl bg-blue-50/40 hover:bg-blue-50/80 border border-blue-100 hover:border-blue-300 transition-all group">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4 shadow-xs group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                     </div>
                     <h3 class="font-display font-black text-lg text-slate-900 mb-1.5">Offline First & PWA Installable</h3>
