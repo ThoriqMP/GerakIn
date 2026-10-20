@@ -22,12 +22,12 @@
 
     <!-- 1. TOP NAVBAR -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
             <!-- Brand Logo -->
-            <a href="{{ route('home') }}" class="flex items-center gap-2.5 shrink-0 group">
-                <img src="/icons/icon-72x72.png" alt="GerakIn Logo" class="w-9 h-9 rounded-xl shadow-xs group-hover:scale-105 transition-transform">
+            <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-2.5 shrink-0 group">
+                <img src="/icons/icon-72x72.png" alt="GerakIn Logo" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl shadow-xs group-hover:scale-105 transition-transform">
                 <div class="flex flex-col">
-                    <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 flex items-center">
+                    <span class="font-display font-extrabold text-lg sm:text-2xl tracking-tight text-slate-900 flex items-center">
                         <span>Gerak</span><span class="text-blue-600">In</span>
                     </span>
                     <span class="text-[9px] text-slate-500 font-semibold tracking-wider uppercase -mt-1 hidden sm:block">Workout & Running</span>
@@ -47,68 +47,96 @@
                 <a href="#faq" class="whitespace-nowrap hover:text-blue-600 transition-colors">FAQ</a>
             </nav>
 
-            <!-- Auth CTAs (Single-Line, Non-wrapping Buttons) -->
-            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <!-- PWA Install Button -->
+            <!-- Auth CTAs (Responsive: Clean on Mobile, Full on Desktop) -->
+            <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                <!-- PWA Install Button (Desktop & Tablet) -->
                 <button type="button"
                         @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
-                        class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold transition-colors border border-blue-200 whitespace-nowrap"
+                        class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold transition-colors border border-blue-200 whitespace-nowrap"
                         title="Pasang Aplikasi GerakIn">
                     <svg class="w-3.5 h-3.5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     <span>Pasang App</span>
                 </button>
 
                 @auth
-                    <a href="{{ route('dashboard') }}" class="whitespace-nowrap px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-1.5">
-                        <span>Buka Dashboard</span>
+                    <a href="{{ route('dashboard') }}" class="whitespace-nowrap px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-1.5">
+                        <span>Dashboard</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </a>
                 @else
-                    <a href="{{ route('demo.login') }}" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors border border-slate-200 whitespace-nowrap" title="Coba langsung tanpa registrasi">
+                    <!-- Demo 1-Klik (Desktop & Tablet) -->
+                    <a href="{{ route('demo.login') }}" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors border border-slate-200 whitespace-nowrap" title="Coba langsung tanpa registrasi">
                         <svg class="w-3.5 h-3.5 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
                         <span>Demo 1-Klik</span>
                     </a>
 
-                    <a href="{{ route('login') }}" class="whitespace-nowrap px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors">
+                    <!-- Masuk (Hidden on small phones to prevent overflow, accessible in hamburger) -->
+                    <a href="{{ route('login') }}" class="hidden sm:inline-flex whitespace-nowrap px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors">
                         Masuk
                     </a>
 
-                    <a href="{{ route('register') }}" class="whitespace-nowrap px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 active:scale-95 transition-all">
-                        Daftar Gratis
+                    <!-- Daftar Button -->
+                    <a href="{{ route('register') }}" class="whitespace-nowrap px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-display font-bold text-xs sm:text-sm shadow-md shadow-blue-500/20 active:scale-95 transition-all">
+                        Daftar
                     </a>
                 @endauth
 
-                <!-- Mobile Menu Button -->
-                <button type="button" @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors" aria-label="Menu">
+                <!-- Mobile Menu Button (Always fully visible, never cut off) -->
+                <button type="button" @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors shrink-0" aria-label="Menu Navigasi">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Dropdown Nav -->
-        <div x-show="mobileMenu" x-cloak @click.away="mobileMenu = false" class="lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-4 space-y-2.5 shadow-lg">
-            <!-- Mobile PWA Install Button -->
-            <button type="button" @click="mobileMenu = false; (window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true))" class="w-full flex items-center justify-between text-xs font-bold text-blue-700 bg-blue-50 px-3.5 py-2.5 rounded-xl border border-blue-200">
+        <!-- Mobile Dropdown Nav (Clean, Scrollable, Complete) -->
+        <div x-show="mobileMenu"
+             x-cloak
+             @click.away="mobileMenu = false"
+             class="lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-4 space-y-3 shadow-xl max-h-[calc(100vh-4.5rem)] overflow-y-auto">
+            <!-- Mobile PWA Install Highlight Button -->
+            <button type="button" @click="mobileMenu = false; (window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true))" class="w-full flex items-center justify-between text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 px-3.5 py-2.5 rounded-xl border border-blue-200 transition-colors">
                 <div class="flex items-center gap-2">
                     <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>Pasang Aplikasi (PWA)</span>
+                    <span>Pasang Aplikasi di HP (PWA)</span>
                 </div>
                 <span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-md font-extrabold uppercase">Install</span>
             </button>
 
-            <a href="#fitur-utama" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-1.5 hover:text-blue-600">Fitur Unggulan</a>
-            <a href="#strava-running" @click="mobileMenu = false" class="flex items-center justify-between text-sm font-semibold text-blue-600 py-1.5">
-                <span>Lari GPS (Strava Mode)</span>
-                <span class="px-2 py-0.5 text-[10px] bg-blue-100 text-blue-700 rounded-md font-bold">Baru</span>
-            </a>
-            <a href="#gym-logger" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-1.5 hover:text-blue-600">Gym & Angkat Beban</a>
-            <a href="#muscle-heatmap" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-1.5 hover:text-blue-600">Muscle Heatmap</a>
-            <a href="#pwa-offline" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-1.5 hover:text-blue-600">Offline PWA</a>
-            <a href="#faq" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-1.5 hover:text-blue-600">FAQ</a>
+            <!-- Navigation Links -->
+            <div class="space-y-1 pt-1">
+                <a href="#fitur-utama" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-2 px-2 rounded-xl hover:bg-slate-100 transition-colors">Fitur Unggulan</a>
+                <a href="#strava-running" @click="mobileMenu = false" class="flex items-center justify-between text-sm font-semibold text-blue-600 py-2 px-2 rounded-xl hover:bg-blue-50 transition-colors">
+                    <span>Lari GPS (Strava Mode)</span>
+                    <span class="px-2 py-0.5 text-[10px] bg-blue-100 text-blue-700 rounded-md font-bold">Baru</span>
+                </a>
+                <a href="#gym-logger" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-2 px-2 rounded-xl hover:bg-slate-100 transition-colors">Gym & Angkat Beban</a>
+                <a href="#muscle-heatmap" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-2 px-2 rounded-xl hover:bg-slate-100 transition-colors">Muscle Heatmap</a>
+                <a href="#pwa-offline" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-2 px-2 rounded-xl hover:bg-slate-100 transition-colors">Offline PWA</a>
+                <a href="#faq" @click="mobileMenu = false" class="block text-sm font-semibold text-slate-700 py-2 px-2 rounded-xl hover:bg-slate-100 transition-colors">FAQ</a>
+            </div>
+
             @guest
-                <div class="pt-3 border-t border-slate-100 flex gap-2">
-                    <a href="{{ route('demo.login') }}" class="flex-1 py-2.5 rounded-xl bg-slate-100 text-center text-xs font-bold text-slate-700 hover:bg-slate-200">Demo 1-Klik</a>
-                    <a href="{{ route('register') }}" class="flex-1 py-2.5 rounded-xl bg-blue-600 text-center text-xs font-bold text-white shadow-xs">Daftar Akun</a>
+                <!-- Guest Actions in Mobile Menu -->
+                <div class="pt-3 border-t border-slate-100 space-y-2">
+                    <a href="{{ route('demo.login') }}" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-center text-xs font-bold text-slate-800 flex items-center justify-center gap-1.5 transition-colors">
+                        <svg class="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+                        <span>Coba Demo 1-Klik Langsung</span>
+                    </a>
+                    <div class="flex gap-2">
+                        <a href="{{ route('login') }}" class="flex-1 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-center text-xs font-bold text-slate-700 transition-colors">
+                            Masuk
+                        </a>
+                        <a href="{{ route('register') }}" class="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-center text-xs font-bold text-white shadow-xs transition-colors">
+                            Daftar Gratis
+                        </a>
+                    </div>
+                </div>
+            @else
+                <div class="pt-3 border-t border-slate-100">
+                    <a href="{{ route('dashboard') }}" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-center text-xs font-bold text-white shadow-xs flex items-center justify-center gap-1.5">
+                        <span>Buka Dashboard</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
                 </div>
             @endguest
         </div>

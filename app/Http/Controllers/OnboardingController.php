@@ -9,6 +9,8 @@ use App\Models\RoutineExercise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\DB;
+
 class OnboardingController extends Controller
 {
     public function show()
@@ -49,45 +51,49 @@ class OnboardingController extends Controller
 
         $user = Auth::user();
 
-        // Update profile
-        $user->profile()->updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'gender' => $validated['gender'],
-                'age' => $validated['age'],
-                'height_cm' => $validated['height_cm'],
-                'current_weight_kg' => $validated['current_weight_kg'],
-                'target_weight_kg' => $validated['target_weight_kg'],
-                'fitness_goal' => $validated['fitness_goal'],
-                'weekly_target_days' => $validated['weekly_target_days'],
-                'preferred_sports' => $validated['preferred_sports'] ?? ['gym'],
-                'preferred_unit' => $validated['preferred_unit'],
-                'default_rest_seconds' => $validated['default_rest_seconds'],
-            ]
-        );
+        DB::transaction(function () use ($user, $validated) {
+            // Update profile
+            $user->profile()->updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'gender' => $validated['gender'],
+                    'age' => $validated['age'],
+                    'height_cm' => $validated['height_cm'],
+                    'current_weight_kg' => $validated['current_weight_kg'],
+                    'target_weight_kg' => $validated['target_weight_kg'],
+                    'fitness_goal' => $validated['fitness_goal'],
+                    'weekly_target_days' => $validated['weekly_target_days'],
+                    'preferred_sports' => $validated['preferred_sports'] ?? ['gym'],
+                    'preferred_unit' => $validated['preferred_unit'],
+                    'default_rest_seconds' => $validated['default_rest_seconds'],
+                ]
+            );
 
-        // Mark onboarding complete
-        $user->update(['onboarding_completed_at' => now()]);
+            // Mark onboarding complete
+            $user->update(['onboarding_completed_at' => now()]);
 
-        // Create initial body log
-        BodyLog::firstOrCreate(
-            ['user_id' => $user->id, 'logged_at' => now()->toDateString()],
-            [
-                'weight_kg' => $validated['current_weight_kg'],
-                'notes' => 'Catatan berat badan awal saat onboarding GerakIn',
-            ]
-        );
+            // Create initial body log
+            BodyLog::firstOrCreate(
+                ['user_id' => $user->id, 'logged_at' => now()->toDateString()],
+                [
+                    'weight_kg' => $validated['current_weight_kg'],
+                    'notes' => 'Catatan berat badan awal saat onboarding GerakIn',
+                ]
+            );
 
-        // If user has no routines yet, generate starter template routines based on their fitness goal
-        if ($user->routines()->count() === 0) {
-            $this->generateStarterRoutines($user, $validated['fitness_goal']);
-        }
+            // If user has no routines yet, generate starter template routines based on their fitness goal
+            if ($user->routines()->count() === 0) {
+                $this->generateStarterRoutines($user, $validated['fitness_goal']);
+            }
+        });
 
         return redirect()->route('dashboard')->with('success', 'Selamat! Profil olahraga GerakIn kamu telah siap. Mari mulai bergerak!');
     }
 
     private function generateStarterRoutines($user, string $goal): void
     {
+        $now = now();
+
         if ($goal === 'endurance') {
             $routine = Routine::create([
                 'user_id' => $user->id,
@@ -98,15 +104,21 @@ class OnboardingController extends Controller
             ]);
 
             $exercises = Exercise::whereIn('name', ['Outdoor Running', 'Jump Rope (Skipping)', 'Plank', 'Mountain Climbers'])->get();
+            $batch = [];
             foreach ($exercises as $i => $ex) {
-                RoutineExercise::create([
+                $batch[] = [
                     'routine_id' => $routine->id,
                     'exercise_id' => $ex->id,
                     'target_sets' => 3,
                     'target_reps' => 15,
                     'rest_seconds' => 60,
                     'sort_order' => $i + 1,
-                ]);
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            }
+            if (!empty($batch)) {
+                RoutineExercise::insert($batch);
             }
         } else {
             // Default Gym / Hypertrophy / Fat Loss / Stay Active
@@ -118,18 +130,6 @@ class OnboardingController extends Controller
                 'sort_order' => 1,
             ]);
 
-            $exA = Exercise::whereIn('name', ['Barbell Bench Press', 'Conventional Barbell Row', 'Incline Dumbbell Press', 'Lat Pulldown (Wide Grip)'])->get();
-            foreach ($exA as $i => $ex) {
-                RoutineExercise::create([
-                    'routine_id' => $routineA->id,
-                    'exercise_id' => $ex->id,
-                    'target_sets' => 3,
-                    'target_reps' => 10,
-                    'rest_seconds' => 90,
-                    'sort_order' => $i + 1,
-                ]);
-            }
-
             $routineB = Routine::create([
                 'user_id' => $user->id,
                 'name' => 'Lower Body & Core (Kaki & Perut)',
@@ -138,16 +138,44 @@ class OnboardingController extends Controller
                 'sort_order' => 2,
             ]);
 
-            $exB = Exercise::whereIn('name', ['Barbell Back Squat', 'Romanian Deadlift (RDL)', 'Standing Calf Raise', 'Hanging Leg Raise'])->get();
-            foreach ($exB as $i => $ex) {
-                RoutineExercise::create([
-                    'routine_id' => $routineB->id,
-                    'exercise_id' => $ex->id,
-                    'target_sets' => 3,
-                    'target_reps' => 10,
-                    'rest_seconds' => 90,
-                    'sort_order' => $i + 1,
-                ]);
+            $namesA = ['Barbell Bench Press', 'Conventional Barbell Row', 'Incline Dumbbell Press', 'Lat Pulldown (Wide Grip)'];
+            $namesB = ['Barbell Back Squat', 'Romanian Deadlift (RDL)', 'Standing Calf Raise', 'Hanging Leg Raise'];
+
+            $allExercises = Exercise::whereIn('name', array_merge($namesA, $namesB))->get()->keyBy('name');
+
+            $allBatch = [];
+            foreach ($namesA as $i => $name) {
+                if (isset($allExercises[$name])) {
+                    $allBatch[] = [
+                        'routine_id' => $routineA->id,
+                        'exercise_id' => $allExercises[$name]->id,
+                        'target_sets' => 3,
+                        'target_reps' => 10,
+                        'rest_seconds' => 90,
+                        'sort_order' => $i + 1,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
+            }
+
+            foreach ($namesB as $i => $name) {
+                if (isset($allExercises[$name])) {
+                    $allBatch[] = [
+                        'routine_id' => $routineB->id,
+                        'exercise_id' => $allExercises[$name]->id,
+                        'target_sets' => 3,
+                        'target_reps' => 10,
+                        'rest_seconds' => 90,
+                        'sort_order' => $i + 1,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
+            }
+
+            if (!empty($allBatch)) {
+                RoutineExercise::insert($allBatch);
             }
         }
     }

@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- PWA Install Button -->
-                <button @click="window.triggerPwaInstall()" x-show="installAvailable" x-cloak class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 text-xs font-semibold transition-all">
+                <button @click="window.triggerPwaInstall()" x-show="installAvailable" x-cloak class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-700 text-xs font-semibold transition-all">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     <span>Pasang App</span>
                 </button>
@@ -141,34 +141,34 @@
         @yield('content')
     </main>
 
-    <!-- FLOATING GLASSMORPHISM BOTTOM NAVIGATION BAR (Finding #002) -->
-    <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md pointer-events-none">
-        <nav class="floating-glass rounded-full px-3 py-2 pointer-events-auto flex items-center justify-between">
+    <!-- FLOATING GLASSMORPHISM BOTTOM NAVIGATION BAR (Safe for iOS/Android Viewports) -->
+    <div class="fixed bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-50 w-[94%] sm:w-[92%] max-w-md pointer-events-none mb-[env(safe-area-inset-bottom,0px)]">
+        <nav class="floating-glass rounded-full px-2 sm:px-3 py-2 pointer-events-auto flex items-center justify-between shadow-xl">
             <!-- 1. Beranda -->
-            <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-full transition-all {{ request()->routeIs('dashboard') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
+            <a href="{{ route('dashboard') }}" class="flex flex-col items-center justify-center py-1 px-2 sm:px-3 rounded-full transition-all {{ request()->routeIs('dashboard') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 <span class="text-[9px] font-semibold mt-0.5">Beranda</span>
             </a>
 
             <!-- 2. Jadwal / Routines -->
-            <a href="{{ route('routines.index') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-full transition-all {{ request()->routeIs('routines*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
+            <a href="{{ route('routines.index') }}" class="flex flex-col items-center justify-center py-1 px-2 sm:px-3 rounded-full transition-all {{ request()->routeIs('routines*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 <span class="text-[9px] font-semibold mt-0.5">Jadwal</span>
             </a>
 
             <!-- 3. CENTER BUTTON: + Mulai (Pilih Gym / Lari GPS) -->
-            <button type="button" @click="globalStartModal = true" class="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group" title="Mulai Sesi Baru">
+            <button type="button" @click="globalStartModal = true" class="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group shrink-0" title="Mulai Sesi Baru">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
             </button>
 
             <!-- 4. Analitik / Statistik -->
-            <a href="{{ route('analytics.index') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-full transition-all {{ request()->routeIs('analytics*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
+            <a href="{{ route('analytics.index') }}" class="flex flex-col items-center justify-center py-1 px-2 sm:px-3 rounded-full transition-all {{ request()->routeIs('analytics*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                 <span class="text-[9px] font-semibold mt-0.5">Statistik</span>
             </a>
 
             <!-- 5. Profil -->
-            <a href="{{ route('profile.index') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-full transition-all {{ request()->routeIs('profile*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
+            <a href="{{ route('profile.index') }}" class="flex flex-col items-center justify-center py-1 px-2 sm:px-3 rounded-full transition-all {{ request()->routeIs('profile*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 <span class="text-[9px] font-semibold mt-0.5">Profil</span>
             </a>

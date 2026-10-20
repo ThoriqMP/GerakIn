@@ -29,6 +29,8 @@
             preferred_sports: ['gym'],
             preferred_unit: 'kg',
             default_rest_seconds: 90,
+            isSubmitting: false,
+            loadingStep: 1,
 
             toggleSport(sport) {
                 if (this.preferred_sports.includes(sport)) {
@@ -38,6 +40,22 @@
                 } else {
                     this.preferred_sports.push(sport);
                 }
+            },
+
+            submitOnboarding() {
+                if (this.isSubmitting) return;
+                this.isSubmitting = true;
+                let s = 1;
+                const interval = setInterval(() => {
+                    if (s < 4) {
+                        s++;
+                        this.loadingStep = s;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 650);
+
+                document.getElementById('onboardingForm').submit();
             }
          }">
 
@@ -60,7 +78,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('onboarding.store') }}" id="onboardingForm">
+        <form method="POST" action="{{ route('onboarding.store') }}" id="onboardingForm" @submit.prevent="submitOnboarding()">
             @csrf
             <!-- Hidden inputs bound to x-data state -->
             <input type="hidden" name="gender" :value="gender">
@@ -326,15 +344,148 @@
                 </div>
 
                 <div class="flex flex-col-reverse sm:flex-row justify-between gap-2.5 sm:gap-0 pt-4 border-t border-slate-100">
-                    <button type="button" @click="step = 2" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm text-center transition-all">
+                    <button type="button" @click="step = 2" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm text-center transition-all" :disabled="isSubmitting">
                         Kembali
                     </button>
-                    <button type="submit" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95">
-                        <span>Selesaikan & Buka Dashboard</span>
+                    <button type="submit"
+                            :disabled="isSubmitting"
+                            class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold text-sm shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95 disabled:cursor-not-allowed">
+                        <template x-if="!isSubmitting">
+                            <span class="flex items-center gap-2">
+                                <span>Selesaikan & Buka Dashboard</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </span>
+                        </template>
+                        <template x-if="isSubmitting">
+                            <span class="flex items-center gap-2">
+                                <svg class="animate-spin -ml-1 mr-1.5 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span>Menyimpan Data...</span>
+                            </span>
+                        </template>
                     </button>
                 </div>
             </div>
         </form>
     </div>
-</body>
-</html>
+
+    <!-- Pop-up Modal Loading Animasi (Menyimpan Data di Langkah ke-3) -->
+    <div x-show="isSubmitting"
+         x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         class="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center relative overflow-hidden"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+
+            <!-- Glowing background soft blue ambient -->
+            <div class="absolute -top-10 -right-10 w-28 h-28 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -left-10 w-28 h-28 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Animated Center Icon -->
+            <div class="relative mx-auto w-20 h-20 mb-5 flex items-center justify-center">
+                <!-- Pulsing outer ring -->
+                <div class="absolute inset-0 rounded-full bg-blue-500/20 animate-ping opacity-60"></div>
+                <!-- Spinning border ring -->
+                <div class="absolute inset-0 rounded-full border-4 border-blue-100 border-t-blue-600 animate-spin"></div>
+                <!-- Core badge with GerakIn Icon -->
+                <div class="relative w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/30">
+                    <svg class="w-7 h-7 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Heading -->
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 mb-2">
+                Sedang Menyiapkan Akunmu
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 mb-5 leading-relaxed">
+                Mohon tunggu sebentar, profil dan program latihan personalmu sedang dikonfigurasi.
+            </p>
+
+            <!-- Dynamic Step Checklist Animation -->
+            <div class="space-y-2.5 text-left bg-slate-50 rounded-2xl p-4 border border-slate-200/80 mb-5">
+                <!-- Step 1 -->
+                <div class="flex items-center gap-3 text-xs sm:text-sm transition-all"
+                     :class="loadingStep >= 1 ? 'text-slate-800 font-semibold' : 'text-slate-400'">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                         :class="loadingStep > 1 ? 'bg-emerald-500 text-white' : (loadingStep === 1 ? 'bg-blue-600 text-white animate-pulse' : 'bg-slate-200 text-slate-500')">
+                        <template x-if="loadingStep > 1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                        </template>
+                        <template x-if="loadingStep === 1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                        </template>
+                        <template x-if="loadingStep < 1">
+                            <span class="text-[10px]">1</span>
+                        </template>
+                    </div>
+                    <span>Menyimpan data fisik & target berat badan</span>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex items-center gap-3 text-xs sm:text-sm transition-all"
+                     :class="loadingStep >= 2 ? 'text-slate-800 font-semibold' : 'text-slate-400'">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                         :class="loadingStep > 2 ? 'bg-emerald-500 text-white' : (loadingStep === 2 ? 'bg-blue-600 text-white animate-pulse' : 'bg-slate-200 text-slate-500')">
+                        <template x-if="loadingStep > 2">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                        </template>
+                        <template x-if="loadingStep === 2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                        </template>
+                        <template x-if="loadingStep < 2">
+                            <span class="text-[10px]">2</span>
+                        </template>
+                    </div>
+                    <span>Menyusun rekomendasi jadwal latihan awal</span>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex items-center gap-3 text-xs sm:text-sm transition-all"
+                     :class="loadingStep >= 3 ? 'text-slate-800 font-semibold' : 'text-slate-400'">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                         :class="loadingStep > 3 ? 'bg-emerald-500 text-white' : (loadingStep === 3 ? 'bg-blue-600 text-white animate-pulse' : 'bg-slate-200 text-slate-500')">
+                        <template x-if="loadingStep > 3">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                        </template>
+                        <template x-if="loadingStep === 3">
+                            <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                        </template>
+                        <template x-if="loadingStep < 3">
+                            <span class="text-[10px]">3</span>
+                        </template>
+                    </div>
+                    <span>Menyiapkan rest timer & target progressive overload</span>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex items-center gap-3 text-xs sm:text-sm transition-all"
+                     :class="loadingStep >= 4 ? 'text-blue-600 font-bold' : 'text-slate-400'">
+                    <div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                         :class="loadingStep >= 4 ? 'bg-blue-600 text-white animate-bounce' : 'bg-slate-200 text-slate-500'">
+                        <template x-if="loadingStep >= 4">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </template>
+                        <template x-if="loadingStep < 4">
+                            <span class="text-[10px]">4</span>
+                        </template>
+                    </div>
+                    <span>Mengarahkan ke Dashboard GerakIn...</span>
+                </div>
+            </div>
+
+            <!-- Progress bar line -->
+            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden mb-2">
+                <div class="bg-blue-600 h-2 rounded-full transition-all duration-500 ease-out"
+                     :style="'width: ' + (loadingStep === 1 ? '28%' : (loadingStep === 2 ? '62%' : (loadingStep === 3 ? '88%' : '100%')))"></div>
+            </div>
+            <p class="text-[11px] text-slate-400">Proses ini membutuhkan waktu beberapa detik, jangan tutup halaman</p>
+        </div>
+    </div>
