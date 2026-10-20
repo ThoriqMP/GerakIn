@@ -12,18 +12,10 @@ use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Root redirect
+// Landing Page (Root Route)
 Route::get('/', function () {
-    try {
-        if (Auth::check()) {
-            return redirect()->route('dashboard');
-        }
-    } catch (\Throwable $e) {
-        \Illuminate\Support\Facades\Log::error('Root redirect check: ' . $e->getMessage());
-        return redirect()->route('login');
-    }
-    return redirect()->route('login');
-});
+    return view('welcome');
+})->name('home');
 
 // PWA Offline Fallback Page
 Route::view('/offline', 'offline')->name('offline');
