@@ -216,6 +216,32 @@
         </div>
     </div>
 
+    <!-- Strava Running Mode Banner -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-5 sm:p-6 text-white shadow-sm relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1 relative z-10">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 text-blue-100 text-[10px] font-bold uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Fitur Baru • Strava Mode</span>
+            </div>
+            <h3 class="font-display font-black text-xl sm:text-2xl text-white mt-1">
+                Lacak Rute & Pace Lari GPS
+            </h3>
+            <p class="text-xs sm:text-sm text-blue-100 max-w-lg">
+                Pantau kecepatan real-time (min/km), rute peta interaktif, dan pecahan waktu per kilometer.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2.5 relative z-10 shrink-0">
+            <a href="{{ route('runs.track') }}" class="px-5 py-3 rounded-2xl bg-white text-blue-700 hover:bg-blue-50 font-display font-black text-xs sm:text-sm shadow-md transition-all active:scale-95 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+                <span>Mulai Lari (GPS)</span>
+            </a>
+            <a href="{{ route('runs.index') }}" class="px-4 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs sm:text-sm transition-colors border border-white/20">
+                Riwayat Lari
+            </a>
+        </div>
+    </div>
+
     <!-- 4. Interactive Realistic Muscle Heatmap Component -->
     <x-muscle-heatmap :muscleHeat="$muscleHeat" :muscleSetsCount="$muscleSetsCount" :gender="$profile->gender ?? 'male'" />
 

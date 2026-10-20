@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white pb-36 antialiased">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white pb-36 antialiased" x-data="{ globalStartModal: false }">
     <!-- Top Header (Clean Light with Soft Blue accent) -->
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-3">
         <div class="max-w-4xl mx-auto flex items-center justify-between">
@@ -55,6 +55,11 @@
                 <!-- Exercise Library Link -->
                 <a href="{{ route('exercises.index') }}" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition-colors" title="Daftar Gerakan">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                </a>
+
+                <!-- Running / Strava GPS Tracker Link -->
+                <a href="{{ route('runs.index') }}" class="p-2 rounded-xl {{ request()->routeIs('runs*') ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900' }} transition-colors" title="Lari & GPS Tracker">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </a>
 
                 <!-- User Profile Avatar -->
@@ -151,10 +156,10 @@
                 <span class="text-[9px] font-semibold mt-0.5">Jadwal</span>
             </a>
 
-            <!-- 3. CENTER BUTTON: + Mulai (Soft Blue Action Pill) -->
-            <a href="{{ route('workouts.start') }}" class="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group" title="Mulai Sesi Latihan">
+            <!-- 3. CENTER BUTTON: + Mulai (Pilih Gym / Lari GPS) -->
+            <button type="button" @click="globalStartModal = true" class="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group" title="Mulai Sesi Baru">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-            </a>
+            </button>
 
             <!-- 4. Analitik / Statistik -->
             <a href="{{ route('analytics.index') }}" class="flex flex-col items-center justify-center py-1 px-3 rounded-full transition-all {{ request()->routeIs('analytics*') ? 'text-blue-600 font-bold bg-blue-50' : 'text-slate-500 hover:text-slate-900' }}">
@@ -168,6 +173,54 @@
                 <span class="text-[9px] font-semibold mt-0.5">Profil</span>
             </a>
         </nav>
+    </div>
+
+    <!-- Global Quick Start Session Modal (Gym vs Running) -->
+    <div x-show="globalStartModal" x-cloak class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-3 sm:p-4">
+        <div @click.away="globalStartModal = false" class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div>
+                    <h3 class="font-display font-black text-lg text-slate-900">Mulai Sesi Baru</h3>
+                    <p class="text-xs text-slate-500">Pilih jenis aktivitas latihanmu</p>
+                </div>
+                <button type="button" @click="globalStartModal = false" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="space-y-2.5">
+                <!-- Gym Workout Option -->
+                <a href="{{ route('workouts.start') }}" class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 transition-all group">
+                    <div class="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <div class="font-display font-bold text-sm text-slate-900 group-hover:text-blue-700">Latihan Gym & Beban</div>
+                        <div class="text-[11px] text-slate-500 leading-tight mt-0.5">Catat set, repetisi, beban kg, dan timer istirahat</div>
+                    </div>
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+
+                <!-- Running / Strava Mode Option -->
+                <a href="{{ route('runs.track') }}" class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 transition-all group">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <div class="font-display font-bold text-sm text-slate-900 group-hover:text-emerald-700">Lari GPS (Strava Mode)</div>
+                        <div class="text-[11px] text-slate-500 leading-tight mt-0.5">Lacak rute peta, durasi, pace min/km, dan split KM</div>
+                    </div>
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+
+            <div class="pt-2 text-center border-t border-slate-100">
+                <a href="{{ route('runs.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800">
+                    <span>Lihat Riwayat & Rekor Lari</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+        </div>
     </div>
 
     @stack('scripts')

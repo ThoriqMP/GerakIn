@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->hasMany(Exercise::class);
     }
 
+    public function runs(): HasMany
+    {
+        return $this->hasMany(Run::class)->latest('started_at');
+    }
+
     public function hasCompletedOnboarding(): bool
     {
         return !is_null($this->onboarding_completed_at);

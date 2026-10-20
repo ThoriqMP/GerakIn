@@ -7,6 +7,7 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoutineController;
+use App\Http\Controllers\RunController;
 use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,15 @@ Route::middleware(['auth', 'onboarded'])->group(function () {
     // Analytics & Progress
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
     Route::post('/analytics/body-log', [AnalyticsController::class, 'storeBodyLog'])->name('analytics.body-log.store');
+
+    // Strava-like GPS Running Tracker & History
+    Route::prefix('runs')->name('runs.')->group(function () {
+        Route::get('/', [RunController::class, 'index'])->name('index');
+        Route::get('/track', [RunController::class, 'tracker'])->name('track');
+        Route::post('/', [RunController::class, 'store'])->name('store');
+        Route::get('/{run}', [RunController::class, 'show'])->name('show');
+        Route::delete('/{run}', [RunController::class, 'destroy'])->name('destroy');
+    });
 
     // Profile & Settings
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
