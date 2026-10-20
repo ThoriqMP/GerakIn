@@ -44,7 +44,33 @@
                     title="Uji coba pelacakan rute tanpa harus keluar ruangan">
                 <span x-text="isDemo ? 'Matikan Demo' : 'Mode Simulasi Demo'"></span>
             </button>
+
+            <!-- Info Guide Button -->
+            <button type="button"
+                    @click="showGpsInfoModal = true"
+                    class="w-7 h-7 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors"
+                    title="Panduan Peta & Mode Simulasi">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </button>
         </div>
+    </div>
+
+    <!-- Demo Mode Active Notice Banner -->
+    <div x-show="isDemo" x-cloak class="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-start justify-between gap-3 shadow-xs">
+        <div class="flex items-start gap-2.5">
+            <div class="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div>
+                <div class="font-display font-bold text-slate-900 text-xs sm:text-sm">Mode Simulasi Demo Aktif</div>
+                <p class="text-slate-600 text-[11px] sm:text-xs mt-0.5 leading-relaxed">
+                    Mode ini mensimulasikan rute lari otomatis (loop GBK Senayan) untuk mencoba fitur Strava tracker tanpa harus keluar ruangan. Untuk lari sungguhan di luar dengan GPS HP, klik tombol <strong>"Matikan"</strong>.
+                </p>
+            </div>
+        </div>
+        <button type="button" @click="toggleDemoMode()" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold shrink-0 transition-colors">
+            Matikan
+        </button>
     </div>
 
     <!-- Live Map Card -->
@@ -275,6 +301,67 @@
             </form>
         </div>
     </div>
+
+    <!-- GPS & Simulation Info Guide Modal -->
+    <div x-show="showGpsInfoModal" x-cloak class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div @click.away="showGpsInfoModal = false" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-base text-slate-900">Panduan Peta & Mode Lari</h3>
+                        <p class="text-[11px] text-slate-500">Cara kerja GPS dan fitur simulasi</p>
+                    </div>
+                </div>
+                <button type="button" @click="showGpsInfoModal = false" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <!-- Point 1: Map -->
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>Peta Interaktif (OpenStreetMap)</span>
+                    </div>
+                    <p class="text-slate-600 text-[11px] sm:text-xs">
+                        Peta menggunakan data OpenStreetMap yang 100% gratis dan bebas watermark. Pastikan browser diizinkan mengakses izin lokasi (GPS) agar peta otomatis mengunci posisi Anda saat ini.
+                    </p>
+                </div>
+
+                <!-- Point 2: Outdoor Running -->
+                <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-1">
+                    <div class="font-bold text-emerald-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                        <span>Mode Lari Nyata (Outdoor Running)</span>
+                    </div>
+                    <p class="text-emerald-800 text-[11px] sm:text-xs">
+                        Gunakan mode standar saat Anda berlari di luar ruangan. Cukup bawa HP dan tekan <strong>Mulai Lari</strong>. Sensor GPS akan mencatat rute nyata, kecepatan pace (menit/km), dan pembagian kilometer secara akurat.
+                    </p>
+                </div>
+
+                <!-- Point 3: Demo Mode -->
+                <div class="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-1">
+                    <div class="font-bold text-blue-900 flex items-center gap-1.5 text-xs sm:text-sm">
+                        <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <span>Mode Simulasi Demo (Uji Coba)</span>
+                    </div>
+                    <p class="text-blue-800 text-[11px] sm:text-xs">
+                        Dibuat khusus agar Anda bisa mencoba semua fitur (animasi rute di peta, kalkulator pace, split lap per km, dan kalkulator kalori) saat berada di dalam ruangan atau di depan laptop tanpa perlu lari fisik.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button type="button" @click="showGpsInfoModal = false" class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors">
+                    Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -288,6 +375,7 @@ function runTracker(userWeightKg) {
         isCountingDown: false,
         countdownNumber: 3,
         showFinishModal: false,
+        showGpsInfoModal: false,
         isSubmitting: false,
         userWeight: userWeightKg || 70,
 
@@ -390,10 +478,10 @@ function runTracker(userWeightKg) {
                 attributionControl: false
             }).setView([defaultLat, defaultLng], 16);
 
-            // Clean, high quality CartoDB Voyager map tiles
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            // Clean, 100% free OpenStreetMap standard tiles (No API key, No watermarks)
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
-                subdomains: 'abcd'
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(this.map);
 
             // Polyline styling: Strava bold blue with border

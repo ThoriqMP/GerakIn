@@ -243,10 +243,10 @@ document.addEventListener('DOMContentLoaded', function () {
         attributionControl: false
     });
 
-    // CartoDB Voyager map tiles
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    // Clean, 100% free OpenStreetMap standard tiles (No API key, No watermarks)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        subdomains: 'abcd'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     // Glowing polyline
