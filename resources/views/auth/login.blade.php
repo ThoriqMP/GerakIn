@@ -21,11 +21,11 @@
         @csrf
 
         <div>
-            <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email</label>
+            <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email atau Username</label>
             <div class="relative">
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
+                <input type="text" id="email" name="email" value="{{ old('email') }}" required autofocus
                        class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 text-sm transition-all"
-                       placeholder="nama@email.com">
+                       placeholder="nama@email.com atau username">
             </div>
         </div>
 

@@ -89,4 +89,108 @@ class AuthAndOnboardingTest extends TestCase
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticated();
     }
+
+    public function test_registered_user_can_login_with_email(): void
+    {
+        // 1. Register
+        $this->post('/register', [
+            'name' => 'Bambang Sudirman',
+            'username' => 'bambangs',
+            'email' => 'bambang@example.com',
+            'password' => 'secret12345',
+            'password_confirmation' => 'secret12345',
+        ]);
+
+        // Complete onboarding
+        $user = User::where('email', 'bambang@example.com')->first();
+        $user->update(['onboarding_completed_at' => now()]);
+
+        // Logout
+        $this->post('/logout');
+        $this->assertGuest();
+
+        // 2. Login with email
+        $response = $this->post('/login', [
+            'email' => 'bambang@example.com',
+            'password' => 'secret12345',
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_registered_user_can_login_with_username(): void
+    {
+        // 1. Register
+        $this->post('/register', [
+            'name' => 'Rina Wijaya',
+            'username' => 'rinawijaya',
+            'email' => 'rina@example.com',
+            'password' => 'secret12345',
+            'password_confirmation' => 'secret12345',
+        ]);
+
+        $user = User::where('email', 'rina@example.com')->first();
+        $user->update(['onboarding_completed_at' => now()]);
+
+        $this->post('/logout');
+        $this->assertGuest();
+
+        // 2. Login using username in the email/username field
+        $response = $this->post('/login', [
+            'email' => 'rinawijaya',
+            'password' => 'secret12345',
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_login_normalizes_case_and_whitespace(): void
+    {
+        $this->post('/register', [
+            'name' => 'Dewi Sartika',
+            'username' => 'dewifit',
+            'email' => 'dewi@example.com',
+            'password' => 'secret12345',
+            'password_confirmation' => 'secret12345',
+        ]);
+
+        $user = User::where('email', 'dewi@example.com')->first();
+        $user->update(['onboarding_completed_at' => now()]);
+
+        $this->post('/logout');
+        $this->assertGuest();
+
+        // Test with uppercase and whitespace
+        $response = $this->post('/login', [
+            'email' => '  DEWI@EXAMPLE.COM  ',
+            'password' => 'secret12345',
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_login_fails_with_wrong_password(): void
+    {
+        $this->post('/register', [
+            'name' => 'Agus Prayitno',
+            'username' => 'agusp',
+            'email' => 'agus@example.com',
+            'password' => 'secret12345',
+            'password_confirmation' => 'secret12345',
+        ]);
+
+        $this->post('/logout');
+        $this->assertGuest();
+
+        $response = $this->post('/login', [
+            'email' => 'agus@example.com',
+            'password' => 'wrongpassword',
+        ]);
+
+        $response->assertSessionHasErrors('email');
+        $this->assertGuest();
+    }
 }

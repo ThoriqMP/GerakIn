@@ -23,16 +23,44 @@ foreach ($dirs as $dir) {
     }
 }
 
-// Ensure SQLite database file exists in /tmp if using sqlite
-$dbConnection = getenv('DB_CONNECTION') ?: 'sqlite';
-if ($dbConnection === 'sqlite') {
+// Database configuration for Vercel Serverless
+$databaseUrl = getenv('DATABASE_URL') ?: (getenv('POSTGRES_URL') ?: getenv('DB_URL'));
+$dbConnection = getenv('DB_CONNECTION');
+
+if ($databaseUrl && empty($dbConnection)) {
+    if (str_starts_with($databaseUrl, 'postgres://') || str_starts_with($databaseUrl, 'postgresql://')) {
+        $dbConnection = 'pgsql';
+        putenv('DB_CONNECTION=pgsql');
+        $_ENV['DB_CONNECTION'] = 'pgsql';
+        $_SERVER['DB_CONNECTION'] = 'pgsql';
+    } elseif (str_starts_with($databaseUrl, 'mysql://')) {
+        $dbConnection = 'mysql';
+        putenv('DB_CONNECTION=mysql');
+        $_ENV['DB_CONNECTION'] = 'mysql';
+        $_SERVER['DB_CONNECTION'] = 'mysql';
+    }
+} elseif (empty($dbConnection) && getenv('DB_HOST')) {
+    $port = (int) (getenv('DB_PORT') ?: 5432);
+    $dbConnection = ($port === 3306) ? 'mysql' : 'pgsql';
+    putenv("DB_CONNECTION={$dbConnection}");
+    $_ENV['DB_CONNECTION'] = $dbConnection;
+    $_SERVER['DB_CONNECTION'] = $dbConnection;
+}
+
+// Ensure SQLite database file exists in /tmp if using sqlite fallback
+if (($dbConnection ?: 'sqlite') === 'sqlite' && empty($databaseUrl)) {
     $dbPath = getenv('DB_DATABASE') ?: '/tmp/database.sqlite';
     putenv("DB_DATABASE={$dbPath}");
     $_ENV['DB_DATABASE'] = $dbPath;
     $_SERVER['DB_DATABASE'] = $dbPath;
 
     if (!file_exists($dbPath)) {
-        @touch($dbPath);
+        $sourceDb = __DIR__ . '/../database/database.sqlite';
+        if (file_exists($sourceDb) && filesize($sourceDb) > 0) {
+            @copy($sourceDb, $dbPath);
+        } else {
+            @touch($dbPath);
+        }
     }
 }
 

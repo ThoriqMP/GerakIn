@@ -22,13 +22,20 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         $remember = $request->boolean('remember');
+        $loginInput = trim($credentials['email']);
+        $isEmail = filter_var($loginInput, FILTER_VALIDATE_EMAIL);
 
-        if (Auth::attempt($credentials, $remember)) {
+        $attemptCredentials = [
+            $isEmail ? 'email' : 'username' => Str::lower($loginInput),
+            'password' => $credentials['password'],
+        ];
+
+        if (Auth::attempt($attemptCredentials, $remember)) {
             $request->session()->regenerate();
 
             if (!Auth::user()->hasCompletedOnboarding()) {
@@ -61,10 +68,10 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
-            'username' => Str::lower($validated['username']),
-            'email' => Str::lower($validated['email']),
-            'password' => Hash::make($validated['password']),
+            'name' => trim($validated['name']),
+            'username' => Str::lower(trim($validated['username'])),
+            'email' => Str::lower(trim($validated['email'])),
+            'password' => $validated['password'],
         ]);
 
         // Create initial default profile
@@ -119,7 +126,7 @@ class AuthController extends Controller
             'name' => 'User Baru ' . $uniq,
             'username' => 'user_' . $uniq,
             'email' => 'user_' . $uniq . '@test.app',
-            'password' => Hash::make('secret123'),
+            'password' => 'secret123',
         ]);
 
         UserProfile::create([
