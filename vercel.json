@@ -13,7 +13,11 @@
       "dest": "/public/build/$1"
     },
     {
-      "src": "/(.*\\.(?:css|js|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2|eot|otf|webp|avif|txt|json|webmanifest))$",
+      "src": "/downloads/(.*)",
+      "dest": "/public/downloads/$1"
+    },
+    {
+      "src": "/(.*\\.(?:css|js|png|jpg|jpeg|gif|svg|ico|ttf|woff|woff2|eot|otf|webp|avif|txt|json|webmanifest|apk))$",
       "dest": "/public/$1"
     },
     {

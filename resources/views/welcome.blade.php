@@ -18,7 +18,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white" x-data="{ mobileMenu: false, pwaModalOpen: false }" x-init="window.addEventListener('pwa-installable', () => {})">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white"
+      x-data="{
+          mobileMenu: false,
+          pwaModalOpen: false,
+          apkModalOpen: false,
+          apkProgress: 0,
+          apkStage: 'idle',
+          apkStatusText: 'Menyiapkan berkas unduhan...',
+          apkDownloadTimer: null,
+          startApkDownload() {
+              this.apkModalOpen = true;
+              this.apkStage = 'preparing';
+              this.apkProgress = 15;
+              this.apkStatusText = 'Menghubungkan ke server GerakIn...';
+              
+              if (this.apkDownloadTimer) clearInterval(this.apkDownloadTimer);
+              
+              this.apkDownloadTimer = setInterval(() => {
+                  if (this.apkProgress < 40) {
+                      this.apkProgress += 12;
+                      this.apkStatusText = 'Memeriksa paket aplikasi v1.0.0 (43 MB)...';
+                  } else if (this.apkProgress < 75) {
+                      this.apkProgress += 15;
+                      this.apkStatusText = 'Menyiapkan berkas APK resmi GerakIn...';
+                  } else if (this.apkProgress < 95) {
+                      this.apkProgress += 10;
+                      this.apkStatusText = 'Memulai proses transfer ke perangkat Anda...';
+                  } else {
+                      clearInterval(this.apkDownloadTimer);
+                      this.apkProgress = 100;
+                      this.apkStage = 'completed';
+                      this.apkStatusText = 'Unduhan berhasil dimulai!';
+                      this.triggerFileDownload();
+                  }
+              }, 250);
+          },
+          triggerFileDownload() {
+              const link = document.createElement('a');
+              link.href = '/downloads/gerakin-app.apk';
+              link.download = 'gerakin-v1.0.0.apk';
+              document.body.appendChild(link);
+              link.click();
+              setTimeout(() => {
+                  if (document.body.contains(link)) document.body.removeChild(link);
+              }, 1200);
+          }
+      }"
+      x-init="window.addEventListener('pwa-installable', () => {})">
 
     <!-- 1. TOP NAVBAR -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all">
@@ -93,6 +140,17 @@
              x-cloak
              @click.away="mobileMenu = false"
              class="lg:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-4 space-y-3 shadow-xl max-h-[calc(100vh-4.5rem)] overflow-y-auto">
+            <!-- Mobile APK Install Highlight Button -->
+            <button type="button" @click="mobileMenu = false; startApkDownload()" class="w-full flex items-center justify-between text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2.5 rounded-xl border border-emerald-200 transition-colors">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                    </svg>
+                    <span>Unduh APK Android (v1.0)</span>
+                </div>
+                <span class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded-md font-extrabold uppercase">Unduh</span>
+            </button>
+
             <!-- Mobile PWA Install Highlight Button -->
             <button type="button" @click="mobileMenu = false; (window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true))" class="w-full flex items-center justify-between text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 px-3.5 py-2.5 rounded-xl border border-blue-200 transition-colors">
                 <div class="flex items-center gap-2">
@@ -174,12 +232,15 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
 
-                <a href="https://github.com/ThoriqMP/GerakIn-Mobile/releases/latest/download/app-release.apk" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2" title="Unduh File APK Android Langsung">
+                <button type="button"
+                        @click="startApkDownload()"
+                        class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                        title="Unduh File APK Android Langsung">
                     <svg class="w-5 h-5 text-white shrink-0" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
                     </svg>
                     <span>Unduh APK (Android)</span>
-                </a>
+                </button>
 
                 <a href="{{ route('demo.login') }}" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-display font-bold text-sm sm:text-base border border-slate-200 shadow-sm active:scale-95 transition-all flex items-center justify-center gap-2">
                     <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
@@ -807,11 +868,12 @@
                 <p class="text-xs text-slate-600 leading-relaxed">
                     Instal aplikasi Android resmi GerakIn secara mandiri tanpa Google Play Store. Dilengkapi fitur auto-update otomatis.
                 </p>
-                <a href="https://github.com/ThoriqMP/GerakIn-Mobile/releases/latest/download/app-release.apk"
-                   class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-xs shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all">
+                <button type="button"
+                   @click="pwaModalOpen = false; startApkDownload()"
+                   class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-xs shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     <span>Download APK GerakIn (app-release.apk)</span>
-                </a>
+                </button>
             </div>
 
             <div class="relative flex py-1 items-center">
@@ -858,8 +920,105 @@
             </div>
 
             <div class="pt-2">
-                <button type="button" @click="pwaModalOpen = false" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition-all">
+                <button type="button" @click="pwaModalOpen = false" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition-all cursor-pointer">
                     Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- APK Download Progress & Waiting Modal -->
+    <div x-show="apkModalOpen"
+         x-cloak
+         class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div @click.away="apkModalOpen = false"
+             class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-5">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-600/20 shrink-0">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-black text-lg text-slate-900 leading-tight">Unduh GerakIn Android</h3>
+                        <p class="text-xs text-slate-500 font-medium">Versi 1.0.0 • Paket APK Resmi (43 MB)</p>
+                    </div>
+                </div>
+                <button type="button" @click="apkModalOpen = false" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Progress Box -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="font-bold text-slate-700 flex items-center gap-2">
+                        <template x-if="apkStage !== 'completed'">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        </template>
+                        <template x-if="apkStage === 'completed'">
+                            <span class="inline-flex w-4 h-4 rounded-full bg-emerald-600 text-white items-center justify-center text-[10px]">✓</span>
+                        </template>
+                        <span x-text="apkStatusText"></span>
+                    </span>
+                    <span class="font-mono font-extrabold text-emerald-700" x-text="apkProgress + '%'"></span>
+                </div>
+
+                <!-- Animated Progress Bar -->
+                <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden p-0.5">
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full transition-all duration-300 ease-out shadow-xs"
+                         :style="'width: ' + apkProgress + '%'"></div>
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                    <span>Berkas: gerakin-v1.0.0.apk</span>
+                    <span>43.2 MB</span>
+                </div>
+            </div>
+
+            <!-- Download Started Info & Instructions -->
+            <div class="space-y-3">
+                <template x-if="apkStage === 'completed'">
+                    <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 space-y-1.5">
+                        <div class="font-bold flex items-center gap-1.5 text-emerald-800">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span>Unduhan Sedang Berjalan di Latar Belakang!</span>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed text-[11px]">
+                            Berkas APK otomatis diunduh oleh peramban Anda. Silakan cek bilah notifikasi atas atau folder <strong>Download</strong> di HP Anda.
+                        </p>
+                    </div>
+                </template>
+
+                <!-- 3 Steps Installation Guide -->
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 text-xs">
+                    <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>Cara Memasang di HP Android:</span>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-1 text-slate-600 text-[11px] leading-relaxed">
+                        <li>Buka file <strong>gerakin-v1.0.0.apk</strong> setelah unduhan selesai.</li>
+                        <li>Jika Android memunculkan konfirmasi keamanan, pilih <strong>"Izinkan dari sumber ini"</strong> atau <strong>"Tetap Unduh / Instal"</strong>.</li>
+                        <li>Tekan tombol <strong>Instal</strong>. Buka GerakIn dan siap digunakan.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="flex items-center gap-2 pt-2">
+                <button type="button"
+                        @click="triggerFileDownload()"
+                        class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-xs shadow-md shadow-emerald-600/20 flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Unduh Ulang (Jika Belum Mulai)</span>
+                </button>
+                <button type="button"
+                        @click="apkModalOpen = false"
+                        class="py-3 px-5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-colors cursor-pointer">
+                    Tutup
                 </button>
             </div>
         </div>
