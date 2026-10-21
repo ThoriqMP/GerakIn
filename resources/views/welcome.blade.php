@@ -225,255 +225,291 @@
                 GerakIn menggabungkan kemudahan pencatatan set & beban gym dengan pelacak lari real-time ala Strava. Dilengkapi muscle heatmap interaktif, timer istirahat otomatis, dan kemampuan offline penuh.
             </p>
 
-            <!-- Action CTAs with APK & PWA Install -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-                <a href="{{ route('register') }}" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-display font-black text-sm sm:text-base shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <span>Mulai Sekarang (Gratis)</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </a>
+            <!-- Action CTAs with APK & PWA Install (Clean Responsive 2-tier layout on mobile) -->
+            <div class="flex flex-col items-center justify-center gap-2.5 sm:gap-3 pt-2 w-full max-w-xl mx-auto">
+                <!-- Tier 1: Primary Actions -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full">
+                    <a href="{{ route('register') }}" class="w-full px-6 py-3.5 sm:py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-display font-black text-sm sm:text-base shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <span>Mulai Sekarang (Gratis)</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
 
-                <button type="button"
-                        @click="startApkDownload()"
-                        class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                        title="Unduh File APK Android Langsung">
-                    <svg class="w-5 h-5 text-white shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
-                    </svg>
-                    <span>Unduh APK (Android)</span>
-                </button>
+                    <button type="button"
+                            @click="startApkDownload()"
+                            class="w-full px-5 py-3.5 sm:py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                            title="Unduh File APK Android Langsung">
+                        <svg class="w-5 h-5 text-white shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                        </svg>
+                        <span>Unduh APK (Android)</span>
+                    </button>
+                </div>
 
-                <a href="{{ route('demo.login') }}" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-display font-bold text-sm sm:text-base border border-slate-200 shadow-sm active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
-                    <span>Demo 1-Klik</span>
-                </a>
+                <!-- Tier 2: Secondary Options (Side-by-side on mobile) -->
+                <div class="grid grid-cols-2 gap-2 sm:gap-3 w-full">
+                    <a href="{{ route('demo.login') }}" class="w-full px-3 sm:px-5 py-3 sm:py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-display font-bold text-xs sm:text-sm border border-slate-200 shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 sm:gap-2">
+                        <svg class="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+                        <span>Demo 1-Klik</span>
+                    </a>
 
-                <button type="button"
-                        @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
-                        class="w-full sm:w-auto px-5 py-4 rounded-2xl bg-blue-50/80 hover:bg-blue-100/80 text-blue-800 font-display font-bold text-sm sm:text-base border border-blue-200 shadow-xs active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>Pasang di HP (PWA)</span>
-                </button>
+                    <button type="button"
+                            @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
+                            class="w-full px-3 sm:px-5 py-3 sm:py-3.5 rounded-2xl bg-blue-50/80 hover:bg-blue-100/80 text-blue-800 font-display font-bold text-xs sm:text-sm border border-blue-200 shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer">
+                        <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Pasang PWA</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Trust Badges -->
-            <div class="pt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-600">
+            <div class="pt-3 sm:pt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs font-semibold text-slate-600">
                 <span class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                     <span>100% Bebas Iklan</span>
                 </span>
                 <span class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    <span>Jalan Lancar di Basement (Offline PWA)</span>
+                    <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <span>Offline PWA (Basement Friendly)</span>
                 </span>
                 <span class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                    <span>Peta GPS & Pecahan Pace KM</span>
+                    <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <span>Peta GPS & Pecahan Lap KM</span>
                 </span>
             </div>
         </div>
 
         <!-- 3. INTERACTIVE LIVE APPLICATION SHOWCASE -->
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 mt-12 sm:mt-16" x-data="{ activeTab: 'running' }">
-            <div class="bg-white rounded-3xl sm:rounded-[32px] p-3 sm:p-5 border border-slate-200 shadow-xl shadow-slate-200/50">
-                <!-- Tab Controls -->
-                <div class="flex items-center justify-center gap-1.5 sm:gap-2 p-1.5 bg-slate-100 rounded-2xl mb-4 overflow-x-auto no-scrollbar">
+        <div class="max-w-5xl mx-auto px-3 sm:px-6 mt-10 sm:mt-16" x-data="{ activeTab: 'running' }">
+            <div class="bg-white rounded-3xl p-2.5 sm:p-5 border border-slate-200 shadow-xl shadow-slate-200/50">
+                
+                <!-- Tab Controls (Responsive, Thumb-friendly, No horizontal clipping) -->
+                <div class="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 p-1 sm:p-1.5 bg-slate-100 rounded-2xl mb-3 sm:mb-4 overflow-x-auto no-scrollbar scroll-smooth">
                     <button type="button"
                             @click="activeTab = 'running'"
-                            class="px-3.5 sm:px-5 py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 whitespace-nowrap"
+                            class="shrink-0 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap cursor-pointer"
                             :class="activeTab === 'running' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'">
-                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        <span>1. Pelacak Lari GPS (Strava)</span>
+                        <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <span>Lari GPS</span>
+                        <span class="hidden sm:inline">(Strava Mode)</span>
                     </button>
 
                     <button type="button"
                             @click="activeTab = 'gym'"
-                            class="px-3.5 sm:px-5 py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 whitespace-nowrap"
+                            class="shrink-0 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap cursor-pointer"
                             :class="activeTab === 'gym' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'">
-                        <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                        <span>2. Pencatat Gym & Timer</span>
+                        <svg class="w-4 h-4 text-slate-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        <span>Pencatat Gym</span>
+                        <span class="hidden sm:inline">& Timer</span>
                     </button>
 
                     <button type="button"
                             @click="activeTab = 'heatmap'"
-                            class="px-3.5 sm:px-5 py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 whitespace-nowrap"
+                            class="shrink-0 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap cursor-pointer"
                             :class="activeTab === 'heatmap' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'">
-                        <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                        <span>3. Muscle Heatmap</span>
+                        <svg class="w-4 h-4 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span>Muscle Heatmap</span>
                     </button>
 
                     <button type="button"
                             @click="activeTab = 'analytics'"
-                            class="px-3.5 sm:px-5 py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-2 whitespace-nowrap"
+                            class="shrink-0 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-display font-extrabold text-xs sm:text-sm transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap cursor-pointer"
                             :class="activeTab === 'analytics' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'">
-                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                        <span>4. Analitik & Streak</span>
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <span>Analitik</span>
+                        <span class="hidden sm:inline">& Streak</span>
                     </button>
                 </div>
 
-                <!-- Showcase Canvas Frame -->
-                <div class="bg-slate-50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-200/80 min-h-[380px] sm:min-h-[460px] flex items-center justify-center">
+                <!-- Showcase Canvas Frame (Tighter padding on mobile to maximize content area) -->
+                <div class="bg-slate-50 rounded-2xl sm:rounded-3xl p-3 sm:p-6 border border-slate-200/80 min-h-[350px] sm:min-h-[460px] flex items-center justify-center">
 
                     <!-- TAB 1: RUNNING TRACKER PREVIEW -->
-                    <div x-show="activeTab === 'running'" class="w-full max-w-3xl space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                                <span class="text-xs font-bold text-slate-800">Sesi Lari Real-Time: Gelora Bung Karno</span>
+                    <div x-show="activeTab === 'running'" class="w-full max-w-3xl space-y-3 sm:space-y-4">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0"></span>
+                                <span class="text-xs sm:text-sm font-bold text-slate-800 truncate">Sesi Lari: Gelora Bung Karno</span>
                             </div>
-                            <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-black">GPS Akurat</span>
+                            <span class="shrink-0 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] sm:text-xs font-black">GPS Akurat</span>
                         </div>
 
-                        <!-- Mini Simulated Running Map Mockup -->
-                        <div class="bg-slate-800 rounded-2xl h-48 sm:h-60 relative overflow-hidden flex items-center justify-center border border-slate-700 shadow-inner">
+                        <!-- Simulated Running Map Mockup (No Voyager/OSM text, ultra-sleek dark runner HUD) -->
+                        <div class="bg-[#0f172a] rounded-2xl h-44 sm:h-60 relative overflow-hidden flex items-center justify-center border border-slate-800 shadow-inner">
+                            <!-- Subtle City Grid Lines -->
+                            <div class="absolute inset-0 opacity-15" style="background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px); background-size: 32px 32px;"></div>
+
                             <!-- SVG Stylized Route Map Graphics -->
-                            <svg class="absolute inset-0 w-full h-full opacity-60" viewBox="0 0 600 240" fill="none">
-                                <path d="M50 180 C 120 180, 160 80, 260 80 C 360 80, 390 190, 480 160 C 530 140, 560 60, 580 40" stroke="#3B82F6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 8" class="animate-pulse"/>
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 600 240" fill="none" preserveAspectRatio="none">
+                                <!-- Base Route Shadow Glow -->
+                                <path d="M50 180 C 130 180, 160 70, 260 70 C 360 70, 390 190, 480 150 C 520 130, 550 70, 580 40" stroke="#0284c7" stroke-width="10" stroke-linecap="round" opacity="0.25"/>
+                                <!-- Active Running Polyline -->
+                                <path d="M50 180 C 130 180, 160 70, 260 70 C 360 70, 390 190, 480 150 C 520 130, 550 70, 580 40" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 8" class="animate-pulse"/>
+                                
+                                <!-- Start Marker (KM 0) -->
                                 <circle cx="50" cy="180" r="10" fill="#10B981" stroke="#FFFFFF" stroke-width="3"/>
-                                <circle cx="480" cy="160" r="8" fill="#3B82F6" stroke="#FFFFFF" stroke-width="2.5"/>
+                                <text x="50" y="210" fill="#10B981" font-size="12" font-weight="bold" text-anchor="middle">START</text>
+
+                                <!-- KM Waypoints -->
+                                <circle cx="200" cy="115" r="4" fill="#94A3B8"/>
+                                <circle cx="330" cy="115" r="4" fill="#94A3B8"/>
+                                <circle cx="430" cy="175" r="4" fill="#94A3B8"/>
+
+                                <!-- Current Runner Position Marker with Pulsing Ring -->
+                                <circle cx="480" cy="150" r="14" fill="#38bdf8" opacity="0.3" class="animate-ping"/>
+                                <circle cx="480" cy="150" r="8" fill="#0284c7" stroke="#FFFFFF" stroke-width="3"/>
                             </svg>
-                            <div class="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 shadow-sm flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                                <span>Peta Voyager OpenStreetMap</span>
+
+                            <!-- Clean Authentic Route Badge (Replaces Voyager OpenStreetMap) -->
+                            <div class="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 bg-slate-900/85 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-slate-700/80 text-[11px] sm:text-xs font-bold text-white shadow-sm flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span>Rute GBK Senayan (Loop 5K)</span>
                             </div>
-                            <div class="absolute bottom-3 right-3 bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-mono font-bold">
-                                GPS Tracking: Live Polyline
+
+                            <!-- Telemetry Status Tag -->
+                            <div class="absolute bottom-2.5 sm:bottom-3 right-2.5 sm:right-3 bg-slate-900/85 backdrop-blur-md text-emerald-400 border border-slate-700/80 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl text-[10px] sm:text-xs font-mono font-bold flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>Live GPS • Elevasi +18m</span>
                             </div>
                         </div>
 
-                        <!-- Live Telemetry HUD -->
-                        <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center">
-                            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
-                                <div class="text-[10px] font-bold text-slate-600 uppercase">Jarak Tempuh</div>
-                                <div class="font-display font-black text-xl sm:text-2xl text-slate-900 mt-0.5">5.24 <span class="text-xs text-blue-600">km</span></div>
+                        <!-- Live Telemetry HUD (2 columns on mobile, 4 on desktop — No text wrapping or collision) -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-center">
+                            <div class="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Jarak Tempuh</div>
+                                <div class="font-display font-black text-lg sm:text-2xl text-slate-900 mt-0.5">5.24 <span class="text-xs text-blue-600 font-bold">km</span></div>
                             </div>
-                            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
-                                <div class="text-[10px] font-bold text-slate-600 uppercase">Waktu Gerak</div>
-                                <div class="font-display font-black text-xl sm:text-2xl text-slate-900 mt-0.5">28:15</div>
+                            <div class="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Waktu Gerak</div>
+                                <div class="font-display font-black text-lg sm:text-2xl text-slate-900 mt-0.5">28:15</div>
                             </div>
-                            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
-                                <div class="text-[10px] font-bold text-slate-600 uppercase">Pace Saat Ini</div>
-                                <div class="font-display font-black text-xl sm:text-2xl text-blue-600 mt-0.5">5'23" <span class="text-[10px] text-slate-600 font-semibold">/km</span></div>
+                            <div class="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Pace Saat Ini</div>
+                                <div class="font-display font-black text-lg sm:text-2xl text-blue-600 mt-0.5">5'23" <span class="text-[10px] text-slate-500 font-semibold">/km</span></div>
                             </div>
-                            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs">
-                                <div class="text-[10px] font-bold text-slate-600 uppercase">Kalori Terbakar</div>
-                                <div class="font-display font-black text-xl sm:text-2xl text-slate-900 mt-0.5">385 <span class="text-xs text-slate-600">kcal</span></div>
+                            <div class="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs">
+                                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Kalori Terbakar</div>
+                                <div class="font-display font-black text-lg sm:text-2xl text-slate-900 mt-0.5">385 <span class="text-xs text-slate-500 font-semibold">kcal</span></div>
                             </div>
                         </div>
 
-                        <!-- Splits Preview Snippet -->
-                        <div class="bg-white p-3 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
-                            <span class="font-bold text-slate-700">Pecahan KM 5 (Split Tercepat):</span>
-                            <span class="font-black text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">5'10" /km • 👑 Rekor Lap Hari Ini</span>
+                        <!-- Splits Preview Snippet (Flex-col on mobile, flex-row on desktop) -->
+                        <div class="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                                <span class="font-bold text-slate-700">Pecahan KM 5 (Split Tercepat):</span>
+                            </div>
+                            <span class="font-black text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 text-[11px] sm:text-xs">
+                                5'10" /km • Rekor Lap Hari Ini
+                            </span>
                         </div>
                     </div>
 
                     <!-- TAB 2: GYM WORKOUT LOGGER PREVIEW -->
-                    <div x-show="activeTab === 'gym'" x-cloak class="w-full max-w-3xl space-y-4">
-                        <div class="flex items-center justify-between">
+                    <div x-show="activeTab === 'gym'" x-cloak class="w-full max-w-3xl space-y-3 sm:space-y-4">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2">
                             <div>
-                                <h4 class="font-display font-black text-base text-slate-900">Sesi Latihan: Push Day Hypertrophy</h4>
-                                <p class="text-xs text-slate-600">Smart Progressive Overload dengan Riwayat Sesi Terakhir</p>
+                                <h4 class="font-display font-black text-sm sm:text-base text-slate-900">Sesi Latihan: Push Day Hypertrophy</h4>
+                                <p class="text-[11px] sm:text-xs text-slate-600">Smart Progressive Overload dengan Riwayat Sesi Terakhir</p>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-black">Rest: 01:15</span>
+                            <span class="shrink-0 px-2.5 py-0.5 sm:py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-black">Rest: 01:15</span>
                         </div>
 
                         <!-- Exercise Card Mockup -->
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3">
-                            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-black text-xs">1</div>
-                                    <div>
-                                        <div class="font-bold text-sm text-slate-900">Barbell Bench Press</div>
-                                        <div class="text-[11px] text-slate-600">Otot Utama: Dada (Chest) • Alat: Barbell</div>
+                        <div class="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-xs space-y-2.5 sm:space-y-3">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-100 gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-black text-xs shrink-0">1</div>
+                                    <div class="min-w-0">
+                                        <div class="font-bold text-xs sm:text-sm text-slate-900 truncate">Barbell Bench Press</div>
+                                        <div class="text-[10px] sm:text-[11px] text-slate-500 truncate">Dada (Chest) • Barbell</div>
                                     </div>
                                 </div>
-                                <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">
+                                <span class="shrink-0 text-[10px] sm:text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 sm:py-1 rounded-md border border-emerald-100">
                                     + Rekor Baru (PR)
                                 </span>
                             </div>
 
-                            <!-- Sets Table Mockup -->
-                            <div class="space-y-1.5 text-xs">
-                                <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 text-slate-600 font-bold text-[11px]">
-                                    <span class="w-12">SET</span>
-                                    <span class="w-24 text-center">SEBELUMNYA</span>
-                                    <span class="w-20 text-center">BEBAN (KG)</span>
-                                    <span class="w-16 text-center">REPS</span>
-                                    <span class="w-10 text-right">STATUS</span>
+                            <!-- Sets Table Mockup (Clean Grid, Perfectly Sized for Mobile) -->
+                            <div class="space-y-1 text-xs">
+                                <div class="grid grid-cols-5 text-center text-[10px] sm:text-[11px] font-bold text-slate-500 p-1.5 sm:p-2 bg-slate-50 rounded-xl">
+                                    <span>SET</span>
+                                    <span>TERAKHIR</span>
+                                    <span>BEBAN</span>
+                                    <span>REPS</span>
+                                    <span>STATUS</span>
                                 </div>
-                                <div class="flex items-center justify-between p-2 rounded-xl bg-emerald-50/60 border border-emerald-200 text-slate-900 font-semibold">
-                                    <span class="w-12 font-bold text-emerald-800">Set 1</span>
-                                    <span class="w-24 text-center text-slate-600">75 kg × 10</span>
-                                    <span class="w-20 text-center font-bold">80 kg</span>
-                                    <span class="w-16 text-center font-bold">10 reps</span>
-                                    <span class="w-10 text-right text-emerald-600 font-black">✓ Selesai</span>
+                                <div class="grid grid-cols-5 text-center items-center text-[11px] sm:text-xs font-semibold p-1.5 sm:p-2 rounded-xl bg-emerald-50/60 border border-emerald-200 text-slate-900">
+                                    <span class="font-bold text-emerald-800">Set 1</span>
+                                    <span class="text-slate-500 text-[10px] sm:text-xs">75kg × 10</span>
+                                    <span class="font-bold">80 kg</span>
+                                    <span class="font-bold">10 reps</span>
+                                    <span class="text-emerald-600 font-black text-[10px] sm:text-xs">✓ Selesai</span>
                                 </div>
-                                <div class="flex items-center justify-between p-2 rounded-xl bg-blue-50/60 border border-blue-200 text-slate-900 font-semibold">
-                                    <span class="w-12 font-bold text-blue-800">Set 2</span>
-                                    <span class="w-24 text-center text-slate-600">75 kg × 8</span>
-                                    <span class="w-20 text-center font-bold">80 kg</span>
-                                    <span class="w-16 text-center font-bold">8 reps</span>
-                                    <span class="w-10 text-right text-blue-600 font-black">⏱ 00:45</span>
+                                <div class="grid grid-cols-5 text-center items-center text-[11px] sm:text-xs font-semibold p-1.5 sm:p-2 rounded-xl bg-blue-50/60 border border-blue-200 text-slate-900">
+                                    <span class="font-bold text-blue-800">Set 2</span>
+                                    <span class="text-slate-500 text-[10px] sm:text-xs">75kg × 8</span>
+                                    <span class="font-bold">80 kg</span>
+                                    <span class="font-bold">8 reps</span>
+                                    <span class="text-blue-600 font-black text-[10px] sm:text-xs">⏱ 00:45</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                            <div class="p-2.5 bg-white rounded-xl border border-slate-200">
-                                <span class="text-slate-600">Total Angkatan: </span>
-                                <strong class="text-slate-900 font-black">3,450 kg</strong>
+                        <!-- 3 Summary Metrics -->
+                        <div class="grid grid-cols-3 gap-1.5 sm:gap-2 text-center text-xs">
+                            <div class="p-2 sm:p-2.5 bg-white rounded-xl border border-slate-200">
+                                <div class="text-[10px] text-slate-500 uppercase">Total Beban</div>
+                                <div class="text-slate-900 font-black text-xs sm:text-sm mt-0.5">3,450 kg</div>
                             </div>
-                            <div class="p-2.5 bg-white rounded-xl border border-slate-200">
-                                <span class="text-slate-600">Durasi Sesi: </span>
-                                <strong class="text-slate-900 font-black">42 menit</strong>
+                            <div class="p-2 sm:p-2.5 bg-white rounded-xl border border-slate-200">
+                                <div class="text-[10px] text-slate-500 uppercase">Durasi Sesi</div>
+                                <div class="text-slate-900 font-black text-xs sm:text-sm mt-0.5">42 menit</div>
                             </div>
-                            <div class="p-2.5 bg-white rounded-xl border border-slate-200">
-                                <span class="text-slate-600">Rest Timer: </span>
-                                <strong class="text-blue-600 font-black">Auto Sound/Vibrate</strong>
+                            <div class="p-2 sm:p-2.5 bg-white rounded-xl border border-slate-200">
+                                <div class="text-[10px] text-slate-500 uppercase">Rest Timer</div>
+                                <div class="text-blue-600 font-black text-xs sm:text-sm mt-0.5">Auto Sound</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- TAB 3: MUSCLE HEATMAP PREVIEW -->
-                    <div x-show="activeTab === 'heatmap'" x-cloak class="w-full max-w-3xl space-y-4">
-                        <div class="flex items-center justify-between">
+                    <div x-show="activeTab === 'heatmap'" x-cloak class="w-full max-w-3xl space-y-3 sm:space-y-4">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2">
                             <div>
-                                <h4 class="font-display font-black text-base text-slate-900">Peta Otot Interaktif (Muscle Heatmap)</h4>
-                                <p class="text-xs text-slate-600">Visualisasi anatomis bagian tubuh yang terlatih dalam 7 hari terakhir</p>
+                                <h4 class="font-display font-black text-sm sm:text-base text-slate-900">Peta Otot Interaktif (Muscle Heatmap)</h4>
+                                <p class="text-[11px] sm:text-xs text-slate-600">Visualisasi bagian tubuh yang terlatih dalam 7 hari terakhir</p>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold">Volume Tinggi: Dada & Punggung</span>
+                            <span class="shrink-0 px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[11px] sm:text-xs font-bold">Fokus: Dada & Punggung</span>
                         </div>
 
-                        <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-around gap-6">
-                            <!-- Visual Anatomy Representation Cards -->
-                            <div class="space-y-2 text-center">
-                                <div class="w-36 h-48 rounded-2xl bg-slate-900 p-3 flex flex-col justify-between text-white relative overflow-hidden shadow-md">
+                        <div class="bg-white p-3.5 sm:p-6 rounded-2xl border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+                            <!-- Visual Anatomy Representation (Side-by-side on mobile) -->
+                            <div class="grid grid-cols-2 gap-2.5 sm:gap-4 w-full md:w-auto shrink-0 justify-center">
+                                <div class="rounded-2xl bg-slate-900 p-2.5 sm:p-3 flex flex-col justify-between text-white relative overflow-hidden shadow-md h-40 sm:h-48">
                                     <div class="text-[10px] uppercase font-bold text-slate-400">Tampak Depan</div>
                                     <div class="space-y-1">
-                                        <div class="px-2 py-1 bg-amber-500 rounded-md text-[10px] font-bold">Dada: 12 Set (Tinggi)</div>
-                                        <div class="px-2 py-1 bg-blue-600 rounded-md text-[10px] font-bold">Bahu: 8 Set</div>
-                                        <div class="px-2 py-1 bg-emerald-600 rounded-md text-[10px] font-bold">Kaki: 6 Set</div>
+                                        <div class="px-1.5 py-0.5 bg-amber-500 rounded text-[9px] sm:text-[10px] font-bold">Dada: 12 Set</div>
+                                        <div class="px-1.5 py-0.5 bg-blue-600 rounded text-[9px] sm:text-[10px] font-bold">Bahu: 8 Set</div>
+                                        <div class="px-1.5 py-0.5 bg-emerald-600 rounded text-[9px] sm:text-[10px] font-bold">Kaki: 6 Set</div>
                                     </div>
-                                    <div class="text-[9px] text-slate-400">Anatomi Anterior</div>
+                                    <div class="text-[8px] sm:text-[9px] text-slate-400">Anterior</div>
                                 </div>
-                            </div>
 
-                            <div class="space-y-2 text-center">
-                                <div class="w-36 h-48 rounded-2xl bg-slate-900 p-3 flex flex-col justify-between text-white relative overflow-hidden shadow-md">
+                                <div class="rounded-2xl bg-slate-900 p-2.5 sm:p-3 flex flex-col justify-between text-white relative overflow-hidden shadow-md h-40 sm:h-48">
                                     <div class="text-[10px] uppercase font-bold text-slate-400">Tampak Belakang</div>
                                     <div class="space-y-1">
-                                        <div class="px-2 py-1 bg-amber-500 rounded-md text-[10px] font-bold">Punggung: 14 Set</div>
-                                        <div class="px-2 py-1 bg-blue-600 rounded-md text-[10px] font-bold">Triceps: 8 Set</div>
-                                        <div class="px-2 py-1 bg-slate-700 rounded-md text-[10px] font-bold">Hamstring: Istirahat</div>
+                                        <div class="px-1.5 py-0.5 bg-amber-500 rounded text-[9px] sm:text-[10px] font-bold">Punggung: 14 Set</div>
+                                        <div class="px-1.5 py-0.5 bg-blue-600 rounded text-[9px] sm:text-[10px] font-bold">Triceps: 8 Set</div>
+                                        <div class="px-1.5 py-0.5 bg-slate-700 rounded text-[9px] sm:text-[10px] font-bold">Hamstring: Rehat</div>
                                     </div>
-                                    <div class="text-[9px] text-slate-400">Anatomi Posterior</div>
+                                    <div class="text-[8px] sm:text-[9px] text-slate-400">Posterior</div>
                                 </div>
                             </div>
 
-                            <div class="text-left space-y-2 max-w-xs text-xs">
-                                <div class="font-bold text-slate-900 text-sm">Bagaimana Heatmap Bekerja?</div>
-                                <p class="text-slate-600">Setiap kali Anda mencatat set latihan, algoritma GerakIn menghitung intensitas otot secara real-time. Otot yang membutuhkan pemulihan akan ditandai agar tidak terjadi overtraining.</p>
-                                <div class="pt-1 flex items-center gap-2 text-[11px] font-semibold text-blue-600">
+                            <div class="text-left space-y-1.5 sm:space-y-2 text-xs w-full">
+                                <div class="font-bold text-slate-900 text-xs sm:text-sm">Bagaimana Heatmap Bekerja?</div>
+                                <p class="text-slate-600 leading-relaxed text-[11px] sm:text-xs">Setiap kali Anda mencatat set latihan, algoritma GerakIn menghitung intensitas otot secara real-time. Bagian tubuh yang butuh pemulihan akan ditandai agar tidak terjadi overtraining.</p>
+                                <div class="pt-1 flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold text-blue-600">
                                     <span>Tersedia untuk siluet pria dan wanita</span>
                                 </div>
                             </div>
@@ -481,42 +517,42 @@
                     </div>
 
                     <!-- TAB 4: ANALYTICS & PROGRESS -->
-                    <div x-show="activeTab === 'analytics'" x-cloak class="w-full max-w-3xl space-y-4">
-                        <div class="flex items-center justify-between">
+                    <div x-show="activeTab === 'analytics'" x-cloak class="w-full max-w-3xl space-y-3 sm:space-y-4">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2">
                             <div>
-                                <h4 class="font-display font-black text-base text-slate-900">Grafik Konsistensi & Riwayat Beban</h4>
-                                <p class="text-xs text-slate-600">Pantau perkembangan One Rep Max (1RM) dan streak mingguan</p>
+                                <h4 class="font-display font-black text-sm sm:text-base text-slate-900">Grafik Konsistensi & Riwayat Beban</h4>
+                                <p class="text-[11px] sm:text-xs text-slate-600">Pantau perkembangan One Rep Max (1RM) dan streak mingguan</p>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">🔥 6 Minggu Streak</span>
+                            <span class="shrink-0 px-2.5 py-0.5 sm:py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">🔥 6 Minggu Streak</span>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
-                                <div class="text-[11px] font-bold uppercase text-slate-600">Target Mingguan</div>
-                                <div class="font-display font-black text-3xl text-slate-900 mt-1">4 / 4</div>
-                                <div class="text-[11px] text-emerald-600 font-bold mt-1">✓ Target Terpenuhi</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+                            <div class="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200">
+                                <div class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-500">Target Mingguan</div>
+                                <div class="font-display font-black text-2xl sm:text-3xl text-slate-900 mt-0.5">4 / 4</div>
+                                <div class="text-[10px] sm:text-[11px] text-emerald-600 font-bold mt-0.5">✓ Target Terpenuhi</div>
                             </div>
 
-                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
-                                <div class="text-[11px] font-bold uppercase text-slate-600">Volume Angkatan</div>
-                                <div class="font-display font-black text-3xl text-blue-600 mt-1">48.2 <span class="text-sm">ton</span></div>
-                                <div class="text-[11px] text-slate-600 mt-1">+12% dari bulan lalu</div>
+                            <div class="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200">
+                                <div class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-500">Volume Angkatan</div>
+                                <div class="font-display font-black text-2xl sm:text-3xl text-blue-600 mt-0.5">48.2 <span class="text-sm">ton</span></div>
+                                <div class="text-[10px] sm:text-[11px] text-slate-500 mt-0.5">+12% dari bulan lalu</div>
                             </div>
 
-                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
-                                <div class="text-[11px] font-bold uppercase text-slate-600">Total Sesi Lari</div>
-                                <div class="font-display font-black text-3xl text-slate-900 mt-1">18 <span class="text-sm font-semibold">kali</span></div>
-                                <div class="text-[11px] text-blue-600 font-bold mt-1">84.5 km tercatat</div>
+                            <div class="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200">
+                                <div class="text-[10px] sm:text-[11px] font-bold uppercase text-slate-500">Total Sesi Lari</div>
+                                <div class="font-display font-black text-2xl sm:text-3xl text-slate-900 mt-0.5">18 <span class="text-sm font-semibold">kali</span></div>
+                                <div class="text-[10px] sm:text-[11px] text-blue-600 font-bold mt-0.5">84.5 km tercatat</div>
                             </div>
                         </div>
 
                         <!-- Progress Bar Simulation -->
-                        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
-                            <div class="flex justify-between text-xs font-bold">
+                        <div class="bg-white p-3 sm:p-4 rounded-2xl border border-slate-200 space-y-1.5 sm:space-y-2">
+                            <div class="flex justify-between text-[11px] sm:text-xs font-bold">
                                 <span class="text-slate-700">Progres Beban Bench Press (Target: 100 kg)</span>
                                 <span class="text-blue-600">85 kg (85%)</span>
                             </div>
-                            <div class="w-full h-3 rounded-full bg-slate-100 overflow-hidden">
+                            <div class="w-full h-2.5 sm:h-3 rounded-full bg-slate-100 overflow-hidden">
                                 <div class="h-full bg-blue-600 rounded-full" style="width: 85%"></div>
                             </div>
                         </div>
