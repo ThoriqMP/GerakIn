@@ -20,8 +20,8 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-center items-center p-4 selection:bg-blue-600 selection:text-white antialiased">
     <div class="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 my-6">
-        <!-- Left Side: Clean Branding / Feature Highlights -->
-        <div class="md:col-span-5 bg-slate-50/80 p-8 sm:p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-200">
+        <!-- Left Side: Clean Branding / Feature Highlights (Desktop Only) -->
+        <div class="hidden md:flex md:col-span-5 bg-slate-50/80 p-8 sm:p-10 flex-col justify-between border-b md:border-b-0 md:border-r border-slate-200">
             <div>
                 <div class="flex items-center gap-3 mb-6">
                     <img src="/icons/icon-96x96.png" alt="GerakIn Logo" class="w-12 h-12 rounded-2xl shadow-sm border border-slate-200">
@@ -66,8 +66,19 @@
             </div>
         </div>
 
-        <!-- Right Side: Auth Form Container -->
-        <div class="md:col-span-7 p-6 sm:p-10 bg-white flex flex-col justify-center">
+        <!-- Right Side: Auth Form Container (Full Width on Mobile) -->
+        <div class="col-span-1 md:col-span-7 p-6 sm:p-10 bg-white flex flex-col justify-center">
+            <!-- Mobile Brand Header (Visible only on mobile) -->
+            <div class="flex items-center gap-2.5 mb-5 md:hidden">
+                <img src="/icons/icon-72x72.png" alt="GerakIn Logo" class="w-9 h-9 rounded-xl shadow-xs">
+                <div>
+                    <span class="font-display font-black text-xl text-slate-900 tracking-tight flex items-center">
+                        <span>Gerak</span><span class="text-blue-600">In</span>
+                    </span>
+                    <span class="text-[10px] text-slate-500 font-medium">Aplikasi Kebugaran & Lari</span>
+                </div>
+            </div>
+
             @yield('content')
         </div>
     </div>

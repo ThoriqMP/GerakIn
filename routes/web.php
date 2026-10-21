@@ -9,11 +9,37 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\WorkoutController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Landing Page (Root Route)
-Route::get('/', function () {
+// Dedicated App Launcher (Used by Mobile APK & PWA)
+Route::get('/app', function (Request $request) {
+    if (Auth::check()) {
+        if (!Auth::user()->hasCompletedOnboarding()) {
+            return redirect()->route('onboarding');
+        }
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('register');
+})->name('app.launch');
+
+// Landing Page (Root Route for Web Browser, auto-redirect for Mobile App & PWA)
+Route::get('/', function (Request $request) {
+    if (Auth::check()) {
+        if (!Auth::user()->hasCompletedOnboarding()) {
+            return redirect()->route('onboarding');
+        }
+        return redirect()->route('dashboard');
+    }
+
+    // If opened from Mobile APK or PWA, bypass landing page directly to account registration/onboarding
+    if ($request->query('source') === 'app'
+        || $request->query('source') === 'pwa'
+        || str_contains($request->userAgent() ?? '', 'GerakIn-Mobile-Android')) {
+        return redirect()->route('register');
+    }
+
     return view('welcome');
 })->name('home');
 

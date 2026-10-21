@@ -79,7 +79,18 @@
         </button>
     </form>
 
-    <div class="mt-5 text-center text-xs text-slate-600">
+    <div class="relative flex py-2.5 items-center">
+        <div class="flex-grow border-t border-slate-200"></div>
+        <span class="flex-shrink mx-3 text-[11px] font-bold text-slate-400 uppercase">Atau</span>
+        <div class="flex-grow border-t border-slate-200"></div>
+    </div>
+
+    <a href="{{ route('demo.login') }}" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+        <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+        <span>Coba Akun Demo 1-Klik</span>
+    </a>
+
+    <div class="mt-4 text-center text-xs text-slate-600">
         Sudah memiliki akun?
         <a href="{{ route('login') }}" class="font-bold text-blue-600 hover:underline ml-1">Masuk sekarang</a>
     </div>
