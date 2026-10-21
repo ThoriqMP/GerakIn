@@ -167,21 +167,28 @@
                 GerakIn menggabungkan kemudahan pencatatan set & beban gym dengan pelacak lari real-time ala Strava. Dilengkapi muscle heatmap interaktif, timer istirahat otomatis, dan kemampuan offline penuh.
             </p>
 
-            <!-- Action CTAs with PWA Install -->
+            <!-- Action CTAs with APK & PWA Install -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <a href="{{ route('register') }}" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-display font-black text-sm sm:text-base shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center gap-2">
                     <span>Mulai Sekarang (Gratis)</span>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
 
+                <a href="https://github.com/ThoriqMP/GerakIn-Mobile/releases/latest/download/app-release.apk" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm sm:text-base shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2" title="Unduh File APK Android Langsung">
+                    <svg class="w-5 h-5 text-white shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                    </svg>
+                    <span>Unduh APK (Android)</span>
+                </a>
+
                 <a href="{{ route('demo.login') }}" class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-display font-bold text-sm sm:text-base border border-slate-200 shadow-sm active:scale-95 transition-all flex items-center justify-center gap-2">
                     <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
-                    <span>Coba Demo 1-Klik</span>
+                    <span>Demo 1-Klik</span>
                 </a>
 
                 <button type="button"
                         @click="window.triggerPwaInstall ? window.triggerPwaInstall() : (pwaModalOpen = true)"
-                        class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-blue-50/80 hover:bg-blue-100/80 text-blue-800 font-display font-bold text-sm sm:text-base border border-blue-200 shadow-xs active:scale-95 transition-all flex items-center justify-center gap-2">
+                        class="w-full sm:w-auto px-5 py-4 rounded-2xl bg-blue-50/80 hover:bg-blue-100/80 text-blue-800 font-display font-bold text-sm sm:text-base border border-blue-200 shadow-xs active:scale-95 transition-all flex items-center justify-center gap-2">
                     <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     <span>Pasang di HP (PWA)</span>
                 </button>
@@ -782,6 +789,35 @@
                 <button type="button" @click="pwaModalOpen = false" class="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
+            </div>
+
+            <!-- Direct Android APK Download Card -->
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-200/80 space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow-xs">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.552 0 .9993.4486.9993 1.0003s-.4473 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5511 0 .9993.4486.9993 1.0003s-.4482 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.125 12 8.125s-3.5902.2866-5.1368.8248L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                            </svg>
+                        </div>
+                        <span class="font-display font-bold text-slate-900 text-sm">Unduh File APK Android</span>
+                    </div>
+                    <span class="text-[10px] bg-emerald-600 text-white font-extrabold px-2 py-0.5 rounded-full uppercase">APK v1.0</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Instal aplikasi Android resmi GerakIn secara mandiri tanpa Google Play Store. Dilengkapi fitur auto-update otomatis.
+                </p>
+                <a href="https://github.com/ThoriqMP/GerakIn-Mobile/releases/latest/download/app-release.apk"
+                   class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-xs shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Download APK GerakIn (app-release.apk)</span>
+                </a>
+            </div>
+
+            <div class="relative flex py-1 items-center">
+                <div class="flex-grow border-t border-slate-200"></div>
+                <span class="flex-shrink mx-3 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Atau Pasang PWA di Homescreen</span>
+                <div class="flex-grow border-t border-slate-200"></div>
             </div>
 
             <!-- Device Instructions -->
